@@ -58,6 +58,54 @@ export interface BatchValidationResult {
   entries: BatchEntryResult[];
 }
 
+export type TeacherReviewStatus = "pass" | "revise" | "prohibited";
+
+export interface TeacherReviewEntryInput {
+  entryId: string;
+  text: string;
+  field?: FieldKey;
+}
+
+export interface TeacherReviewRequest {
+  entries: TeacherReviewEntryInput[];
+  defaultField?: FieldKey;
+  profile?: ValidationProfile;
+}
+
+export interface TeacherReviewIssue {
+  ruleId: string;
+  kind: "official" | "editorial";
+  status: "revise" | "prohibited";
+  reason: string;
+  improvement: string;
+  matchedText?: string;
+  citations: Array<{
+    title: string;
+    locatorLabel: string;
+    quote: string;
+  }>;
+}
+
+export interface TeacherEntryReview {
+  entryId: string;
+  field: FieldKey;
+  status: TeacherReviewStatus;
+  label: "통과" | "수정 권장" | "기재 불가";
+  reason: string;
+  issues: TeacherReviewIssue[];
+  improvementGuidance: string[];
+  teacherChecks: string[];
+}
+
+export interface TeacherReviewResult {
+  rulePackId: string;
+  status: TeacherReviewStatus;
+  counts: { total: number; pass: number; revise: number; prohibited: number };
+  entries: TeacherEntryReview[];
+  rewritePolicy: string;
+  disclaimer: string;
+}
+
 export interface RecordValidator {
   validate(input: ValidationInput): ValidationResult;
   validateBatch(entries: readonly BatchEntry[]): BatchValidationResult;
