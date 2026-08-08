@@ -294,6 +294,15 @@ const teacherReviewIssueSchema = z.object({
   }).strict()),
 }).strict();
 
+const rewritePlanSchema = z.object({
+  action: z.enum(["none", "rewrite", "ask_evidence"]),
+  mustRemove: z.array(z.string()),
+  instructions: z.array(z.string()),
+  rewriteReason: z.string(),
+  neededEvidence: z.array(z.string()),
+  requiresRevalidation: z.boolean(),
+}).strict();
+
 const teacherEntryReviewSchema = z.object({
   entryId: z.string(),
   field: fieldKey,
@@ -303,6 +312,7 @@ const teacherEntryReviewSchema = z.object({
   issues: z.array(teacherReviewIssueSchema),
   improvementGuidance: z.array(z.string()),
   teacherChecks: z.array(z.string()),
+  rewritePlan: rewritePlanSchema,
 }).strict();
 
 const teacherReviewResultSchema = z.object({

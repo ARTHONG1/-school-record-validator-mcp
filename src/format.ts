@@ -91,6 +91,19 @@ export function formatTeacherReviewResult(result: TeacherReviewResult): string {
         if (issue.kind === "editorial") lines.push("  [자체 편집 권고 - 교육부 공식 금지 규정 아님]");
       }
     }
+    lines.push("  외부 AI 후속 조치: " + entry.rewritePlan.action);
+    if (entry.rewritePlan.mustRemove.length > 0) {
+      lines.push("  삭제·제외할 표현: " + entry.rewritePlan.mustRemove.join(", "));
+    }
+    for (const instruction of entry.rewritePlan.instructions) {
+      lines.push("  수정 지침: " + instruction);
+    }
+    if (entry.rewritePlan.neededEvidence.length > 0) {
+      lines.push("  추가 확인 자료: " + entry.rewritePlan.neededEvidence.join(", "));
+    }
+    if (entry.rewritePlan.requiresRevalidation) {
+      lines.push("  후보 수정문은 같은 도구로 다시 검증한 뒤에만 사용하세요.");
+    }
   }
   lines.push("※ " + result.rewritePolicy);
   lines.push(result.disclaimer);

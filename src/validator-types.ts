@@ -86,6 +86,17 @@ export interface TeacherReviewIssue {
   }>;
 }
 
+export type RewriteAction = "none" | "rewrite" | "ask_evidence";
+
+export interface RewritePlan {
+  action: RewriteAction;
+  mustRemove: string[];
+  instructions: string[];
+  rewriteReason: string;
+  neededEvidence: string[];
+  requiresRevalidation: boolean;
+}
+
 export interface TeacherEntryReview {
   entryId: string;
   field: FieldKey;
@@ -95,6 +106,7 @@ export interface TeacherEntryReview {
   issues: TeacherReviewIssue[];
   improvementGuidance: string[];
   teacherChecks: string[];
+  rewritePlan: RewritePlan;
 }
 
 export interface TeacherReviewResult {

@@ -1,4 +1,5 @@
 import type { Finding } from "./validator-types.ts";
+import { createRewritePlan } from "./rewrite-plan.ts";
 import type {
   BatchEntry,
   RecordValidator,
@@ -82,6 +83,7 @@ function toEntryReview(
     issues,
     improvementGuidance: unique(issues.map((issue) => issue.improvement)),
     teacherChecks: [TEACHER_CHECK],
+    rewritePlan: createRewritePlan(status, issues, unique(issues.map((issue) => issue.improvement))),
   };
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "school-record-validator-mcp",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Evidence-backed local and remote MCP server for 2026 Korean elementary school-record validation.",
   "license": "MIT",
   "private": true,

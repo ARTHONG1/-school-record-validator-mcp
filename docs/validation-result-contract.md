@@ -4,6 +4,8 @@
 
 기본 teacher 모드의 check_school_record가 실제 교사용 점검 결과를 반환합니다. 입력은 다음 한 가지 형태만 사용합니다.
 
+각 entry에는 외부 AI의 후속 행동을 위한 `rewritePlan`이 포함됩니다. `none`은 수정 후보를 만들지 않는 상태, `rewrite`는 원문 사실만 사용해 후보를 만든 뒤 반드시 재검증해야 하는 상태, `ask_evidence`는 금지된 핵심 내용 때문에 추가 증거를 먼저 교사에게 확인해야 하는 상태입니다. MCP는 `suggestedRewrite`를 생성하지 않으며, 외부 AI가 만든 후보는 2차 `check_school_record` 결과가 `pass`일 때만 검증된 추천문으로 표시해야 합니다.
+
 ~~~json
 {
   "entries": [
