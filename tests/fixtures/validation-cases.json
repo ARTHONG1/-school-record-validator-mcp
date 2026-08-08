@@ -1,0 +1,362 @@
+[
+  {
+    "name": "정상 관찰문",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "친구의 의견을 경청하고 협력적으로 과제를 수행함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["OFFICIAL-DIRECT-OBSERVATION"]
+  },
+  {
+    "name": "공인시험",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "TOEIC에서 높은 점수를 취득함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-LANGUAGE-TEST"],
+    "unexpectedRuleIds": ["FIELD-SUBJECT-PROHIBITED-CONTENT"]
+  },
+  {
+    "name": "대회 수상",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "전국대회에서 수상함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-CONTEST-PARTICIPATION-AWARD"],
+    "unexpectedRuleIds": ["FIELD-ATTENDANCE-PROHIBITED-CONTENT"]
+  },
+  {
+    "name": "부모 직업",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "아버지의 직업이 의사임.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-PARENT-SOCIOECONOMIC-STATUS"],
+    "unexpectedRuleIds": ["OFFICIAL-SPECIFIC-NAME"]
+  },
+  {
+    "name": "해외 활동",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "해외 봉사 경험을 발표함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-OVERSEAS-ACTIVITY"],
+    "unexpectedRuleIds": ["FIELD-ATTENDANCE-PROHIBITED-CONTENT"]
+  },
+  {
+    "name": "학생 작성 문안",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "협력적인 태도로 활동함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": true,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-STUDENT-FINAL-DRAFT"],
+    "unexpectedRuleIds": ["OFFICIAL-AI-VERBATIM"]
+  },
+  {
+    "name": "AI 그대로 입력",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "협력적인 태도로 활동함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "verbatim",
+        "teacherVerifiedAgainstActualPerformance": true,
+        "evidenceReference": "teacher-note-001"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["OFFICIAL-AI-VERBATIM"],
+    "unexpectedRuleIds": ["OFFICIAL-AI-VERIFICATION"]
+  },
+  {
+    "name": "AI 윤문+교사 검증",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "협력적인 태도로 활동함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "proofreading",
+        "teacherVerifiedAgainstActualPerformance": true
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["OFFICIAL-AI-VERBATIM"]
+  },
+  {
+    "name": "AI 초안+교사 검증",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "관찰한 수행을 바탕으로 교사가 다시 작성함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "draft_generation_rewritten",
+        "teacherVerifiedAgainstActualPerformance": true,
+        "evidenceReference": "teacher-note-002"
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["OFFICIAL-AI-VERIFICATION"]
+  },
+  {
+    "name": "창체 외부기관",
+    "input": {
+      "field": "creative_autonomy_club_special",
+      "text": "주제 탐구 활동에 참여함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      },
+      "activityContext": {
+        "domestic": true,
+        "organizers": [{ "kind": "external", "name": "민간연구소" }],
+        "schoolApproved": true,
+        "inSchoolEducationPlan": true
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["FIELD-CREATIVE-ACTIVITY-SCOPE"],
+    "unexpectedRuleIds": ["OFFICIAL-DIRECT-OBSERVATION"]
+  },
+  {
+    "name": "창체 교육청+승인",
+    "input": {
+      "field": "creative_career_special",
+      "text": "진로 탐색 활동에 참여함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      },
+      "activityContext": {
+        "domestic": true,
+        "organizers": [{ "kind": "education_authority", "name": "서울특별시교육청" }],
+        "schoolApproved": true
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["FIELD-CREATIVE-ACTIVITY-SCOPE"]
+  },
+  {
+    "name": "출결 교외대회",
+    "input": {
+      "field": "attendance_special",
+      "text": "교외대회 참가로 결석함."
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["FIELD-ATTENDANCE-PROHIBITED-CONTENT"],
+    "unexpectedRuleIds": ["OFFICIAL-CONTEST-PARTICIPATION-AWARD"]
+  },
+  {
+    "name": "봉사 단순기부",
+    "input": {
+      "field": "volunteer_activity",
+      "text": "현금을 기부함.",
+      "provenance": { "aiUse": "none" },
+      "volunteerContext": {
+        "planType": "school",
+        "evidenceAvailable": true,
+        "activityKind": "service"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["FIELD-VOLUNTEER-SIMPLE-DONATION"],
+    "unexpectedRuleIds": ["FIELD-VOLUNTEER-ELIGIBILITY"]
+  },
+  {
+    "name": "교과 MOOC",
+    "input": {
+      "field": "subject_achievement_special",
+      "text": "MOOC 강좌를 이수함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["FIELD-SUBJECT-PROHIBITED-CONTENT"],
+    "unexpectedRuleIds": ["OFFICIAL-LANGUAGE-TEST"]
+  },
+  {
+    "name": "행동특성 고정 한도 없음",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "협력",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "repeatText": 1000,
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["LENGTH-BEHAVIOR-OPINION"]
+  },
+  {
+    "name": "출결 1,503Byte",
+    "input": {
+      "field": "attendance_special",
+      "text": "가"
+    },
+    "repeatText": 501,
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["LENGTH-ATTENDANCE-SPECIAL"],
+    "unexpectedRuleIds": ["LENGTH-VOLUNTEER-ACTIVITY"]
+  },
+  {
+    "name": "봉사 153Byte",
+    "input": {
+      "field": "volunteer_activity",
+      "text": "가",
+      "provenance": { "aiUse": "none" },
+      "volunteerContext": {
+        "planType": "school",
+        "evidenceAvailable": true,
+        "activityKind": "service"
+      }
+    },
+    "repeatText": 51,
+    "expectedStatus": "blocked",
+    "expectedRuleIds": ["LENGTH-VOLUNTEER-ACTIVITY"],
+    "unexpectedRuleIds": ["LENGTH-ATTENDANCE-SPECIAL"]
+  },
+  {
+    "name": "편집 프로필 최상급",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "항상 협력적인 태도를 보임.",
+      "profile": "official_plus_editorial",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "review",
+    "expectedRuleIds": ["EDITORIAL-UNSUPPORTED-SUPERLATIVE"],
+    "unexpectedRuleIds": ["OFFICIAL-LANGUAGE-TEST"]
+  },
+  {
+    "name": "편집 프로필 비활성",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "항상 협력적인 태도를 보임.",
+      "profile": "official",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "none",
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["EDITORIAL-UNSUPPORTED-SUPERLATIVE"]
+  },
+  {
+    "name": "허용 학생 자료 5종",
+    "input": {
+      "field": "behavior_opinion",
+      "text": "교사의 직접 관찰과 학생 자료를 함께 활용함.",
+      "provenance": {
+        "observationBasis": "direct",
+        "observationContinuity": "continuous",
+        "factualSupport": "supported",
+        "studentMaterial": "peer_evaluation",
+        "studentMaterialInSchoolEducationPlan": true,
+        "studentMaterialUnderTeacherGuidance": true,
+        "studentWroteFinalNarrative": false,
+        "aiUse": "none"
+      }
+    },
+    "expectedStatus": "pass",
+    "expectedRuleIds": [],
+    "unexpectedRuleIds": ["OFFICIAL-STUDENT-MATERIAL-CONDITIONS"]
+  }
+]

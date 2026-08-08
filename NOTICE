@@ -1,0 +1,16 @@
+school-record-validator-mcp
+
+The development-only HWP parser under scripts/vendor/hwp is derived from the
+MIT-licensed vendor/hwp-extension-main project. Its original copyright notice
+and license are preserved in scripts/vendor/hwp/LICENSE.
+
+Official Ministry of Education source documents and generated source-derived
+corpus data are not covered by this software license. Their redistribution
+terms must be reviewed separately before public distribution.
+
+Source attribution and transformation details are documented in
+ATTRIBUTION.md. Data licensing boundaries are documented in DATA_LICENSE.md.
+
+This independent educational practice project was created by AI찬우쌤, a
+current teacher and operator of https://classddok.com. It is not produced,
+reviewed, endorsed, or approved by the Ministry of Education.

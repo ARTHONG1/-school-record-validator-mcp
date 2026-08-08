@@ -1,0 +1,137 @@
+[
+  {
+    "authority": 100,
+    "extractedCharCount": 1034,
+    "format": "hwp5",
+    "includedInChunks": true,
+    "role": "directive-appendix",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555-appendix-10.hwp",
+    "sourceId": "MOE-DIRECTIVE-555-APPENDIX-10",
+    "sourceSha256": "29CCF74AE1B762EFDC2067065F11F8D424BEAA547F6DBE1858F9731B8B4AD4AD",
+    "title": "[별표 10] 학교생활기록부 정정대장 기재 및 관리",
+    "unitCount": 10
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 1140,
+    "format": "hwp5",
+    "includedInChunks": true,
+    "role": "directive-appendix",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555-appendix-11.hwp",
+    "sourceId": "MOE-DIRECTIVE-555-APPENDIX-11",
+    "sourceSha256": "42AA13FA9DA0C084ADEC260A63BA75E88A6DBDBF613100C5A3564B49D1F4AC8E",
+    "title": "[별표 11] 개인정보(진로 관련 사항) 수집ㆍ이용 및 제3자 제공 동의서",
+    "unitCount": 3
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 1564,
+    "format": "hwp5",
+    "includedInChunks": true,
+    "role": "directive-appendix",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555-appendix-7.hwp",
+    "sourceId": "MOE-DIRECTIVE-555-APPENDIX-7",
+    "sourceSha256": "660310C0CA5310BF41E53221FA48FA254598B65B04A7A63BBF14F0DC5311AA81",
+    "title": "[별표 7] 학적처리에 사용하는 용어",
+    "unitCount": 34
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 3916,
+    "format": "hwp5",
+    "includedInChunks": true,
+    "role": "directive-appendix",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555-appendix-8.hwp",
+    "sourceId": "MOE-DIRECTIVE-555-APPENDIX-8",
+    "sourceSha256": "888CCFA6F60B0B89280B2B28CFAE1561639D8318330EE86874AB894310F75901",
+    "title": "[별표 8] 출결상황 관리",
+    "unitCount": 67
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 10808,
+    "format": "hwp5",
+    "includedInChunks": true,
+    "role": "directive-appendix",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555-appendix-9.hwp",
+    "sourceId": "MOE-DIRECTIVE-555-APPENDIX-9",
+    "sourceSha256": "E61B7468A714B15F02699A8484C39839B530D65332FACEAD9D03C2E1B5F9579C",
+    "title": "[별표 9] 교과학습발달상황 평가 및 관리",
+    "unitCount": 134
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 19013,
+    "format": "hwpml",
+    "includedInChunks": false,
+    "role": "verification-copy",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555.hwpml",
+    "sourceId": "MOE-DIRECTIVE-555-HWPML",
+    "sourceSha256": "897BC6CEDCC789E26FD2B107585E056ED1524749E87DEF2C6EAFD7570118BCAC",
+    "title": "학교생활기록 작성 및 관리지침(교육부훈령 제555호) 원본",
+    "unitCount": 286
+  },
+  {
+    "authority": 100,
+    "extractedCharCount": 11127,
+    "format": "text",
+    "includedInChunks": true,
+    "role": "directive-body",
+    "schoolLevels": [
+      "elementary",
+      "middle",
+      "high"
+    ],
+    "snapshotName": "directive-555.txt",
+    "sourceId": "MOE-DIRECTIVE-555-TEXT",
+    "sourceSha256": "025B5F85BD26BCF6FF28D253C4CBFA167A6CB452CEB8D6CC5A34800618528127",
+    "title": "학교생활기록 작성 및 관리지침(교육부훈령 제555호)",
+    "unitCount": 29
+  },
+  {
+    "authority": 80,
+    "extractedCharCount": 167969,
+    "format": "pdf",
+    "includedInChunks": true,
+    "role": "primary-guide",
+    "schoolLevels": [
+      "elementary"
+    ],
+    "snapshotName": "elementary-guide-2026.pdf",
+    "sourceId": "MOE-GUIDE-ELEMENTARY-2026",
+    "sourceSha256": "72DD61629C0F841BBC75ADBF9250130A71D44CF2FFF2A8568BD6EB905FF2B496",
+    "sourceUrl": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=316&boardSeq=105372&lev=0&m=030215&opType=N&s=moe&statusYN=W",
+    "title": "2026 학교생활기록부 기재요령(초등학교)",
+    "unitCount": 161
+  }
+]

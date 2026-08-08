@@ -1,0 +1,12 @@
+node_modules/
+.npm-cache/
+dist/
+.ingest-dist/
+sources/original/*
+!sources/original/.gitkeep
+*.tmp
+tmp/
+task_plan.md
+findings.md
+progress.md
+.planning/

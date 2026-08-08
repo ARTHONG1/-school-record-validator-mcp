@@ -1,0 +1,843 @@
+{
+  "id": "kr-moe-school-record-elementary-2026.1",
+  "schoolLevel": "elementary",
+  "academicYear": 2026,
+  "effectiveFrom": "2026-03-01",
+  "defaultProfile": "official",
+  "authorityOrder": [100, 80, 10],
+  "fields": {
+    "student_name": {
+      "key": "student_name",
+      "label": "성명",
+      "lengthPolicy": {
+        "kind": "conditional-name",
+        "displayKoreanChars": 20,
+        "displayLatinChars": 60,
+        "maxBytes": 60
+      },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "none",
+      "provenanceMode": "none",
+      "lengthRuleId": "LENGTH-STUDENT-NAME",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    "address": {
+      "key": "address",
+      "label": "주소",
+      "lengthPolicy": {
+        "kind": "fixed-bytes",
+        "displayKoreanChars": 300,
+        "maxBytes": 900,
+        "scope": "field"
+      },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "none",
+      "provenanceMode": "none",
+      "lengthRuleId": "LENGTH-ADDRESS",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    "academic_status_special": {
+      "key": "academic_status_special",
+      "label": "학적사항 특기사항",
+      "lengthPolicy": {
+        "kind": "fixed-bytes",
+        "displayKoreanChars": 500,
+        "maxBytes": 1500,
+        "scope": "field"
+      },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "none",
+      "lengthRuleId": "LENGTH-ACADEMIC-STATUS-SPECIAL",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    "attendance_special": {
+      "key": "attendance_special",
+      "label": "출결상황 특기사항",
+      "lengthPolicy": {
+        "kind": "fixed-bytes",
+        "displayKoreanChars": 500,
+        "maxBytes": 1500,
+        "scope": "field"
+      },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "none",
+      "lengthRuleId": "LENGTH-ATTENDANCE-SPECIAL",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    "creative_autonomy_club_special": {
+      "key": "creative_autonomy_club_special",
+      "label": "창의적 체험활동 자율·자치활동 및 동아리활동 특기사항",
+      "lengthPolicy": { "kind": "system-range" },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "teacher-observation",
+      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+    },
+    "creative_career_special": {
+      "key": "creative_career_special",
+      "label": "창의적 체험활동 진로활동 특기사항",
+      "lengthPolicy": { "kind": "system-range" },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "teacher-observation",
+      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+    },
+    "volunteer_activity": {
+      "key": "volunteer_activity",
+      "label": "봉사활동실적 활동내용",
+      "lengthPolicy": {
+        "kind": "fixed-bytes",
+        "displayKoreanChars": 50,
+        "maxBytes": 150,
+        "scope": "entry"
+      },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "activity-evidence",
+      "lengthRuleId": "LENGTH-VOLUNTEER-ACTIVITY",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    "daily_life_special": {
+      "key": "daily_life_special",
+      "label": "일상생활 활동상황 특기사항",
+      "lengthPolicy": { "kind": "system-range" },
+      "applicableTo": "special-basic-curriculum",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "teacher-observation",
+      "evidenceIds": ["EV-DIRECTIVE-4-2"]
+    },
+    "subject_achievement_special": {
+      "key": "subject_achievement_special",
+      "label": "교과학습발달상황 성취수준 및 특기사항",
+      "lengthPolicy": { "kind": "system-range" },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "teacher-observation",
+      "evidenceIds": ["EV-GUIDE-100-SUBJECT"]
+    },
+    "behavior_opinion": {
+      "key": "behavior_opinion",
+      "label": "행동특성 및 종합의견",
+      "lengthPolicy": { "kind": "system-range" },
+      "applicableTo": "all-elementary",
+      "contentRuleMode": "global-prohibitions",
+      "provenanceMode": "teacher-observation",
+      "evidenceIds": ["EV-GUIDE-102-BEHAVIOR"]
+    }
+  },
+  "rules": [
+    {
+      "id": "LENGTH-STUDENT-NAME",
+      "title": "성명 입력 한도",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["student_name"],
+      "message": "성명은 60Byte를 초과하여 입력할 수 없습니다.",
+      "recommendation": "NEIS Byte 기준 60Byte 이내로 성명을 확인하십시오.",
+      "exceptions": [],
+      "kind": "length",
+      "field": "student_name",
+      "maxBytes": 60,
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    {
+      "id": "LENGTH-ADDRESS",
+      "title": "주소 입력 한도",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["address"],
+      "message": "주소는 900Byte를 초과하여 입력할 수 없습니다.",
+      "recommendation": "NEIS Byte 기준 900Byte 이내로 주소를 정리하십시오.",
+      "exceptions": [],
+      "kind": "length",
+      "field": "address",
+      "maxBytes": 900,
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    {
+      "id": "LENGTH-ACADEMIC-STATUS-SPECIAL",
+      "title": "학적사항 특기사항 입력 한도",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["academic_status_special"],
+      "message": "학적사항 특기사항은 1,500Byte를 초과하여 입력할 수 없습니다.",
+      "recommendation": "NEIS Byte 기준 1,500Byte 이내로 내용을 정리하십시오.",
+      "exceptions": [],
+      "kind": "length",
+      "field": "academic_status_special",
+      "maxBytes": 1500,
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    {
+      "id": "LENGTH-ATTENDANCE-SPECIAL",
+      "title": "출결상황 특기사항 입력 한도",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["attendance_special"],
+      "message": "출결상황 특기사항은 1,500Byte를 초과하여 입력할 수 없습니다.",
+      "recommendation": "NEIS Byte 기준 1,500Byte 이내로 내용을 정리하십시오.",
+      "exceptions": [],
+      "kind": "length",
+      "field": "attendance_special",
+      "maxBytes": 1500,
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    {
+      "id": "LENGTH-VOLUNTEER-ACTIVITY",
+      "title": "봉사활동 실적별 활동내용 입력 한도",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["volunteer_activity"],
+      "message": "봉사활동 실적별 활동내용은 150Byte를 초과하여 입력할 수 없습니다.",
+      "recommendation": "각 실적의 활동내용을 NEIS Byte 기준 150Byte 이내로 정리하십시오.",
+      "exceptions": [],
+      "kind": "length",
+      "field": "volunteer_activity",
+      "maxBytes": 150,
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+    },
+    {
+      "id": "OFFICIAL-DIRECT-OBSERVATION",
+      "title": "직접 관찰·평가 근거",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "교사가 직접 관찰·평가한 근거가 확인되어야 합니다.",
+      "recommendation": "교사의 직접 관찰 여부와 예외 근거를 확인하십시오.",
+      "exceptions": ["공식 문서가 인정하는 예외 자료는 별도 근거와 함께 교사가 확인해야 합니다."],
+      "kind": "metadata",
+      "check": "direct-observation",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-DIRECTIVE-4-2", "EV-GUIDE-27-STUDENT-MATERIALS"]
+    },
+    {
+      "id": "OFFICIAL-LANGUAGE-TEST",
+      "title": "공인어학시험 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "공인어학시험 명칭이나 성적은 학교생활기록부에 기재할 수 없습니다.",
+      "recommendation": "시험명과 점수·등급을 삭제하고 학교교육활동에서 관찰한 역량으로 서술하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "literal-any",
+        "caseInsensitive": true,
+        "patterns": [
+          "TOEIC",
+          "TOEFL",
+          "TEPS",
+          "HSK",
+          "JPT",
+          "JLPT",
+          "DELF",
+          "DALF",
+          "ZD",
+          "TESTDAF",
+          "DSH",
+          "DSD",
+          "TORFL",
+          "DELE",
+          "상공회의소한자시험",
+          "한자능력검정",
+          "실용한자",
+          "한자급수자격 검정",
+          "한자급수자격검정",
+          "YBM 상무한검",
+          "YBM상무한검",
+          "한자급수인증시험",
+          "한자자격검정"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-CONTEST-PARTICIPATION-AWARD",
+      "title": "대회 참가·수상실적 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "교내·외 대회 참가 또는 수상실적은 기재할 수 없습니다.",
+      "recommendation": "대회명, 참가·출전 사실, 성적과 수상실적을 삭제하십시오.",
+      "exceptions": ["일반 수업 활동을 단순히 발표회라고 부르는 경우에는 이 규칙을 적용하지 않습니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-OUTSIDE-AWARD",
+      "title": "교외상 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "교외 기관의 상·표창·감사장 등 수상실적은 기재할 수 없습니다.",
+      "recommendation": "교외 수상명과 수여기관을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-CERTIFICATION-TEST",
+      "title": "인증시험 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "인증시험 응시·참여·성적은 기재할 수 없습니다.",
+      "recommendation": "인증시험 명칭과 응시·성적 내용을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-PAPER-PUBLICATION",
+      "title": "논문 발표·등재 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "논문 투고·등재·학회 발표 실적은 기재할 수 없습니다.",
+      "recommendation": "논문 또는 학회 발표 실적을 삭제하십시오.",
+      "exceptions": ["수업 중 작성한 일반 탐구 보고서는 논문 실적으로 표현하지 않은 경우 제외합니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-BOOK-PUBLICATION",
+      "title": "도서 출간 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "도서 출간·출판 실적은 기재할 수 없습니다.",
+      "recommendation": "출간·출판 실적을 삭제하고 학교 수업에서 확인한 활동만 서술하십시오.",
+      "exceptions": ["학교 수업에서 책을 읽거나 교내 산출물을 만든 사실 자체는 출간 실적이 아닙니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-INTELLECTUAL-PROPERTY",
+      "title": "지식재산권 출원·등록 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "특허·실용신안·상표·디자인의 출원 또는 등록 실적은 기재할 수 없습니다.",
+      "recommendation": "지식재산권 출원·등록 내용을 삭제하십시오.",
+      "exceptions": ["수업에서 발명 아이디어를 탐구한 사실은 출원·등록 실적으로 표현하지 않은 경우 제외합니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-OVERSEAS-ACTIVITY",
+      "title": "해외 활동실적 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "해외 어학연수·봉사·활동실적은 기재할 수 없습니다.",
+      "recommendation": "해외 활동실적을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "literal-any",
+        "patterns": ["어학연수", "해외 봉사", "해외봉사", "해외 활동실적", "해외활동실적"]
+      }
+    },
+    {
+      "id": "OFFICIAL-PARENT-SOCIOECONOMIC-STATUS",
+      "title": "부모·친인척 사회경제적 지위 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "부모·친인척의 직업, 직장, 직위 또는 경제적 지위는 기재할 수 없습니다.",
+      "recommendation": "가족의 사회경제적 지위를 드러내는 내용을 삭제하십시오.",
+      "exceptions": ["가족을 배려하는 태도처럼 직업·지위와 무관한 관찰 내용은 제외합니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-SCHOLARSHIP",
+      "title": "장학금 관련 내용 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "장학생 선정이나 장학금 수혜 내용은 기재할 수 없습니다.",
+      "recommendation": "장학생·장학금 관련 내용을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "detector": {
+        "type": "literal-any",
+        "patterns": ["장학생", "장학금"]
+      }
+    },
+    {
+      "id": "OFFICIAL-SPECIFIC-NAME",
+      "title": "특정 대학·기관·상호·강사명 검토",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "특정 대학명·기관명·상호명·강사명으로 보이는 표현은 적용 예외를 확인해야 합니다.",
+      "recommendation": "허용 기관 예외와 활동 맥락을 확인하고, 불필요한 고유명은 일반 명칭으로 바꾸십시오.",
+      "exceptions": [
+        "교육부·교육청·교육지원청과 기재요령에 열거된 교육부 소속 기관은 고정 예외입니다.",
+        "창의적 체험활동에서 허용 주최·주관기관과 승인 조건을 충족하고 기관명이 context metadata와 정확히 일치하면 검토를 억제합니다.",
+        "봉사활동 장소 또는 주관기관명은 이 문구 규칙의 적용 대상에서 제외합니다."
+      ],
+      "outcome": "review",
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)",
+          "(?:강사명\\s*[:：]?\\s*[가-힣]{2,4}|강사\\s+[가-힣]{2,4}(?:님|선생님)?)"
+        ]
+      }
+    },
+    {
+      "id": "OFFICIAL-QUALIFICATION",
+      "title": "자격증 명칭·취득 사실 기재 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "자격증 명칭 또는 취득·합격 사실은 기재할 수 없습니다.",
+      "recommendation": "자격증 명칭과 취득·합격 사실을 삭제하십시오.",
+      "exceptions": ["자격이라는 일반어만으로는 자동 차단하지 않습니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": ["자격증[^\\n.!?。]{0,30}(?:취득|합격)"]
+      }
+    },
+    {
+      "id": "OFFICIAL-FACTUAL-ACCURACY",
+      "title": "사실 확인과 증빙 근거",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "서술 내용의 사실성과 증빙 근거를 확인해야 합니다.",
+      "recommendation": "교사가 확인한 실제 수행과 증빙자료를 대조하십시오.",
+      "exceptions": [],
+      "kind": "metadata",
+      "check": "factual-accuracy",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+    },
+    {
+      "id": "OFFICIAL-STUDENT-MATERIAL-CONDITIONS",
+      "title": "학생 작성 자료 활용 조건",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "학생 작성 자료의 종류와 학교교육계획·교사 지도 조건을 확인해야 합니다.",
+      "recommendation": "허용된 5종 자료인지, 학교교육계획에 따른 교사 지도하의 자료인지 확인하십시오.",
+      "exceptions": ["동료평가서, 자기평가서, 수업산출물, 소감문, 독후감만 정해진 조건에서 활용합니다."],
+      "kind": "metadata",
+      "check": "student-material",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-GUIDE-27-STUDENT-MATERIALS"]
+    },
+    {
+      "id": "OFFICIAL-STUDENT-FINAL-DRAFT",
+      "title": "학생 최종 서술문 작성 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "학생에게 학교생활기록부 최종 서술문을 작성·제출하도록 해서는 안 됩니다.",
+      "recommendation": "학생 최종 문안을 사용하지 말고 교사의 관찰·평가를 바탕으로 다시 작성하십시오.",
+      "exceptions": ["허용된 학생 작성 자료는 최종 기재문이 아니라 교사가 평가에 활용하는 자료입니다."],
+      "kind": "metadata",
+      "check": "student-final-narrative",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+    },
+    {
+      "id": "OFFICIAL-AI-VERBATIM",
+      "title": "AI 생성 자료 그대로 입력 금지",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "AI가 생성한 자료를 그대로 학교생활기록부에 입력할 수 없습니다.",
+      "recommendation": "AI 생성문을 폐기하고 교사가 확인한 실제 관찰·평가를 바탕으로 작성하십시오.",
+      "exceptions": [],
+      "kind": "metadata",
+      "check": "ai-use",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+    },
+    {
+      "id": "OFFICIAL-AI-VERIFICATION",
+      "title": "AI 보조 작성 후 교사 검증",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "AI 보조 사용 시 최종 입력 전에 실제 수행과 무관한 허위·과장 내용과 기재 유의사항 준수 여부를 확인해야 합니다.",
+      "recommendation": "교사가 최종 입력 전에 실제 수행, 허위·과장 여부와 기재 유의사항 준수 여부를 철저히 확인하십시오.",
+      "exceptions": ["AI를 사용하지 않은 경우에는 이 검토를 적용하지 않습니다."],
+      "kind": "metadata",
+      "check": "ai-use",
+      "possibleOutcomes": ["review"],
+      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+    },
+    {
+      "id": "FIELD-ATTENDANCE-PROHIBITED-CONTENT",
+      "title": "출결 특기사항 제외 내용",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["attendance_special"],
+      "message": "출결 특기사항에 해외 봉사·어학연수·교외 대회 참가 내용을 입력할 수 없습니다.",
+      "recommendation": "출결 사유와 관련 없는 해외 활동 또는 교외 대회 내용을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-59-ATTENDANCE"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))"
+        ]
+      }
+    },
+    {
+      "id": "FIELD-CREATIVE-ACTIVITY-SCOPE",
+      "title": "창의적 체험활동 인정 범위",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["creative_autonomy_club_special", "creative_career_special"],
+      "message": "창의적 체험활동의 국내 활동 여부, 주최·주관기관과 학교장 승인 조건을 확인해야 합니다.",
+      "recommendation": "활동 장소, 주최·주관기관, 학교교육계획과 학교장 승인 여부를 확인하십시오.",
+      "exceptions": ["학교가 학교교육계획에 따라 직접 주최·주관한 국내 활동은 별도 승인 조건을 적용하지 않습니다."],
+      "kind": "context",
+      "check": "creative-activity-eligibility",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+    },
+    {
+      "id": "FIELD-VOLUNTEER-SIMPLE-DONATION",
+      "title": "단순 기부 봉사실적 제외",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["volunteer_activity"],
+      "message": "물품이나 현금의 단순 기부는 봉사활동 실적으로 입력할 수 없습니다.",
+      "recommendation": "단순 기부 실적을 삭제하고 실제 봉사활동만 입력하십시오.",
+      "exceptions": ["기부 물품을 분류·포장하는 실제 봉사활동은 단순 기부와 별도로 맥락을 확인합니다."],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-84-VOLUNTEER"],
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))"
+        ]
+      }
+    },
+    {
+      "id": "FIELD-VOLUNTEER-ELIGIBILITY",
+      "title": "봉사활동 실적 인정 조건",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["volunteer_activity"],
+      "message": "봉사활동 계획 유형, 학교장 승인, 증빙과 활동 종류를 확인해야 합니다.",
+      "recommendation": "학교교육계획 또는 개인계획 승인과 증빙자료를 확인하십시오.",
+      "exceptions": [],
+      "kind": "context",
+      "check": "volunteer-eligibility",
+      "possibleOutcomes": ["block", "review"],
+      "evidenceIds": [
+        "EV-GUIDE-83-VOLUNTEER-SCOPE",
+        "EV-GUIDE-84-VOLUNTEER",
+        "EV-GUIDE-85-VOLUNTEER-PROCEDURE"
+      ]
+    },
+    {
+      "id": "FIELD-SUBJECT-PROHIBITED-CONTENT",
+      "title": "교과 성취수준 및 특기사항 제외 내용",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["subject_achievement_special"],
+      "message": "교과 성취수준 및 특기사항에 온라인 공개강좌나 방과후학교 활동을 입력할 수 없습니다.",
+      "recommendation": "K-MOOC·MOOC·KOCW·방과후학교 관련 실적을 삭제하십시오.",
+      "exceptions": [],
+      "outcome": "block",
+      "evidenceIds": ["EV-GUIDE-100-SUBJECT"],
+      "detector": {
+        "type": "literal-any",
+        "caseInsensitive": true,
+        "patterns": ["K-MOOC", "MOOC", "KOCW", "방과후학교"]
+      }
+    },
+    {
+      "id": "FIELD-BEHAVIOR-CONTINUOUS-OBSERVATION",
+      "title": "행동특성의 지속적 관찰",
+      "authorityClass": "official-policy",
+      "profile": "official",
+      "appliesTo": ["behavior_opinion"],
+      "message": "행동특성 및 종합의견은 지속적인 관찰을 바탕으로 작성해야 합니다.",
+      "recommendation": "단일 사건이 아닌 지속적인 관찰 기록을 확인하십시오.",
+      "exceptions": [],
+      "kind": "metadata",
+      "check": "behavior-continuous-observation",
+      "possibleOutcomes": ["review"],
+      "evidenceIds": ["EV-GUIDE-102-BEHAVIOR"]
+    },
+    {
+      "id": "EDITORIAL-UNSUPPORTED-SUPERLATIVE",
+      "title": "근거 없는 최상급·절대 표현",
+      "authorityClass": "editorial-caution",
+      "profile": "official_plus_editorial",
+      "appliesTo": [
+        "academic_status_special",
+        "attendance_special",
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "volunteer_activity",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "관찰 근거가 불명확한 최상급·절대 표현을 검토하십시오.",
+      "recommendation": "구체적인 관찰 장면, 빈도와 변화로 바꾸어 서술하십시오.",
+      "exceptions": ["객관적 자료로 정확히 입증되고 공식 기재가 허용된 표현은 별도 검토합니다."],
+      "outcome": "review",
+      "localPolicyId": "LOCAL-EDITORIAL-POLICY",
+      "detector": {
+        "type": "literal-any",
+        "patterns": ["전교에서 가장", "항상", "완벽하게", "최고의"]
+      }
+    },
+    {
+      "id": "EDITORIAL-HOME-ACTIVITY",
+      "title": "가정 내 활동 서술",
+      "authorityClass": "editorial-caution",
+      "profile": "official_plus_editorial",
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special",
+        "daily_life_special",
+        "subject_achievement_special",
+        "behavior_opinion"
+      ],
+      "message": "교사가 직접 관찰하기 어려운 가정 내 활동 표현을 검토하십시오.",
+      "recommendation": "학교에서 교사가 관찰·확인한 행동과 성취로 바꾸어 서술하십시오.",
+      "exceptions": ["공식적으로 제출된 자료를 활용할 수 있는 예외는 별도 근거를 확인합니다."],
+      "outcome": "review",
+      "localPolicyId": "LOCAL-EDITORIAL-POLICY",
+      "detector": {
+        "type": "literal-any",
+        "patterns": ["집에서", "가정에서", "부모와 함께"]
+      }
+    },
+    {
+      "id": "EDITORIAL-CAREER-CERTAINTY",
+      "title": "진로 단정 표현",
+      "authorityClass": "editorial-caution",
+      "profile": "official_plus_editorial",
+      "appliesTo": ["creative_career_special", "behavior_opinion"],
+      "message": "학생의 미래 진로를 단정하는 표현을 검토하십시오.",
+      "recommendation": "현재 관찰된 관심, 탐색 활동과 역량으로 바꾸어 서술하십시오.",
+      "exceptions": [],
+      "outcome": "review",
+      "localPolicyId": "LOCAL-EDITORIAL-POLICY",
+      "detector": {
+        "type": "regex-any",
+        "patterns": [
+          "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될",
+          "진로가\\s*확실"
+        ]
+      }
+    }
+  ],
+  "localPolicies": {
+    "LOCAL-EDITORIAL-POLICY": {
+      "label": "자체 편집 경고",
+      "disclaimer": "교육부 명시 금지가 아닌 보수적 문장 품질 검토 항목"
+    }
+  }
+}

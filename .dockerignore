@@ -1,0 +1,13 @@
+.git
+.github
+.npm-cache
+.ingest-dist
+dist
+node_modules
+sources/original
+tmp
+tests
+task_plan.md
+findings.md
+progress.md
+*.tmp

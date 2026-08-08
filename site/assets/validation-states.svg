@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+  <title id="title">검증 결과 상태 네 가지</title><desc id="desc">통과, 확인 필요, 검토 권장, 기재 차단 상태의 의미</desc>
+  <rect width="900" height="260" rx="8" fill="#f7faf9"/><g font-family="Arial, sans-serif" text-anchor="middle">
+  <g transform="translate(35 42)"><rect width="190" height="168" rx="8" fill="#e4f2ec"/><circle cx="95" cy="45" r="22" fill="#176b52"/><path d="m84 45 8 8 15-18" fill="none" stroke="#fff" stroke-width="4"/><text x="95" y="96" font-size="19" font-weight="700" fill="#164a39">pass</text><text x="95" y="126" font-size="14" fill="#34574c">탐지된 항목 없음</text></g>
+  <g transform="translate(250 42)"><rect width="190" height="168" rx="8" fill="#e8f2f9"/><circle cx="95" cy="45" r="22" fill="#2878a8"/><text x="95" y="53" font-size="25" font-weight="700" fill="#fff">i</text><text x="95" y="96" font-size="19" font-weight="700" fill="#205b80">needs_context</text><text x="95" y="126" font-size="14" fill="#315e72">작성 경위 확인 필요</text></g>
+  <g transform="translate(465 42)"><rect width="190" height="168" rx="8" fill="#fff4d6"/><circle cx="95" cy="45" r="22" fill="#b7791f"/><text x="95" y="53" font-size="24" font-weight="700" fill="#fff">!</text><text x="95" y="96" font-size="19" font-weight="700" fill="#825617">review</text><text x="95" y="126" font-size="14" fill="#725521">교사 판단 필요</text></g>
+  <g transform="translate(680 42)"><rect width="190" height="168" rx="8" fill="#fde8e7"/><circle cx="95" cy="45" r="22" fill="#b33a36"/><path d="m87 37 16 16m0-16L87 53" stroke="#fff" stroke-width="4"/><text x="95" y="96" font-size="19" font-weight="700" fill="#8b2d2a">blocked</text><text x="95" y="126" font-size="14" fill="#75312e">기재 불가</text></g></g>
+</svg>

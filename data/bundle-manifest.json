@@ -1,0 +1,35 @@
+{
+  "bundleContentSha256": "F8BC1F6AF79740073F4096168083C08EA32200E7EB8BBDD1C1E67B74F0CE03CE",
+  "files": [
+    {
+      "path": "data/corpus/active-chunks.json",
+      "sha256": "17FDF565159F13A23120EEB9A533DCE17E026C13DEF90CDB4681267C8491150D"
+    },
+    {
+      "path": "data/corpus/chunks.jsonl",
+      "sha256": "453D62B8D4E1E88605CEE14B08838C22AE542FDFADCC74F21853DB3E73361795"
+    },
+    {
+      "path": "data/corpus/corpus-manifest.json",
+      "sha256": "06F9EFE8496998F34160342AA4D7DA32A8636BE07D820BF5F7757F4E038760DF"
+    },
+    {
+      "path": "data/corpus/documents.json",
+      "sha256": "BC28E5F4CF1182703FC621CB41C75B1A4B5A444C3E1C994060069404D98B541E"
+    },
+    {
+      "path": "data/evidence/verified-excerpts.json",
+      "sha256": "611C8657166792FFCF1AA595957AF108218A9C6C4B4FD319BA6731FFC094D4DF"
+    },
+    {
+      "path": "data/rules/kr-moe-school-record-elementary-2026.1.json",
+      "sha256": "A4F47E3078AEBF447614D9E9D4C72D13F1E24FCE2BE44D636B2E49BAD30AD65D"
+    },
+    {
+      "path": "sources/manifest.json",
+      "sha256": "582C2FF3369F6B3F0CBD4964B382172CFBBABEEE06B0074A08CDF262397D4C21"
+    }
+  ],
+  "packId": "kr-moe-school-record-elementary-2026.1",
+  "schemaVersion": 1
+}
