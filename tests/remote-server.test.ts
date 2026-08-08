@@ -58,7 +58,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
     });
   });
 
-  it("exposes all seven tools over stateless Streamable HTTP", async () => {
+  it("exposes the expert toolset over stateless Streamable HTTP", async () => {
     await withRemoteServer(async (baseUrl) => {
       const transport = new StreamableHTTPClientTransport(new URL("/mcp", baseUrl), {
         requestInit: { headers: authHeaders },
@@ -67,6 +67,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       try {
         await client.connect(transport);
         assert.deepEqual(toolNames(await client.listTools()), [
+          "check_school_record",
           "explain_record_rule",
           "get_source_excerpt",
           "list_record_fields",
@@ -93,7 +94,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const client = new Client({ name: "public-http-test", version: "0.1.0" });
       try {
         await client.connect(transport);
-        assert.equal((await client.listTools()).tools.length, 7);
+        assert.equal((await client.listTools()).tools.length, 8);
       } finally {
         await client.close();
       }
@@ -112,11 +113,39 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const client = new Client({ name: "remote-sse-test", version: "0.1.0" });
       try {
         await client.connect(transport);
-        assert.equal((await client.listTools()).tools.length, 7);
+        assert.equal((await client.listTools()).tools.length, 8);
       } finally {
         await client.close();
       }
     });
+  });
+
+  it("exposes one practical teacher tool and returns the three-state result", async () => {
+    await withRemoteServer(async (baseUrl) => {
+      const transport = new StreamableHTTPClientTransport(new URL("/mcp", baseUrl), {
+        requestInit: { headers: authHeaders },
+      });
+      const client = new Client({ name: "teacher-http-test", version: "0.3.0" });
+      try {
+        await client.connect(transport);
+        assert.deepEqual(toolNames(await client.listTools()), ["check_school_record"]);
+        const result = CallToolResultSchema.parse(await client.callTool({
+          name: "check_school_record",
+          arguments: {
+            entries: [
+              { entryId: "record_1", text: "빗면을 이용하면 필요한 힘이 줄어드는 까닭을 설명함." },
+              { entryId: "record_2", text: "전교에서 가장 완벽하게 실험함." },
+              { entryId: "record_3", text: "TOEIC에서 우수한 성적을 거둠." },
+            ],
+          },
+        }));
+        assert.notEqual(result.isError, true);
+        const entries = result.structuredContent?.entries as Array<{ status: string }> | undefined;
+        assert.deepEqual(entries?.map((entry) => entry.status), ["pass", "revise", "prohibited"]);
+      } finally {
+        await client.close();
+      }
+    }, { toolset: "teacher" });
   });
 
   it("never returns submitted text in authentication or routing failures", async () => {

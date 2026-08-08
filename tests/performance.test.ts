@@ -6,6 +6,7 @@ import type { EvidenceChunk } from "../src/corpus-types.ts";
 import type { DataBundle } from "../src/data-types.ts";
 import type { PhraseRule } from "../src/rule-types.ts";
 import { createGuidanceSearch } from "../src/search.ts";
+import { createTeacherReviewService } from "../src/teacher-review.ts";
 import { createValidator } from "../src/validator.ts";
 import { buildTestBundle, completeObservation } from "./helpers/validator-fixture.ts";
 import { hasRuntimeLoaderDependency } from "./helpers/security-fixture.ts";
@@ -107,6 +108,20 @@ describe("runtime security and performance budgets", () => {
     assert.ok(
       duration <= HARD_LIMITS_MS.validateHundredEntryBatch,
       `100-entry batch validation took ${duration.toFixed(2)}ms`,
+    );
+  });
+
+  it("reviews a 100-entry teacher batch within the 3x hard limit", () => {
+    const service = createTeacherReviewService(createValidator(buildTestBundle()));
+    const entries = Array.from({ length: 100 }, (_, index) => ({
+      entryId: "teacher-performance-" + index,
+      text: "실험 결과를 비교하여 설명함.",
+    }));
+    const duration = elapsed(() => service.review({ entries }));
+
+    assert.ok(
+      duration <= HARD_LIMITS_MS.validateHundredEntryBatch,
+      "100-entry teacher review took " + duration.toFixed(2) + "ms",
     );
   });
 

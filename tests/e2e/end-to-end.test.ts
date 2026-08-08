@@ -98,6 +98,7 @@ describe("school record validator stdio server", { timeout: 30_000 }, () => {
       command: process.execPath,
       args: [SERVER_ENTRY],
       cwd: PACKAGE_ROOT,
+      env: { ...process.env, MCP_TOOLSET: "expert" },
       stderr: "pipe",
     });
     const client = new Client(
@@ -212,6 +213,48 @@ describe("school record validator stdio server", { timeout: 30_000 }, () => {
         normalizeForContainment(excerpt.text).includes(normalizeForContainment(aiEvidence.quote)),
         "Verified AI rule quote was not found in the source excerpt",
       );
+    } finally {
+      await client.close();
+    }
+  });
+
+  it("checks teacher-facing science records through the default toolset", async () => {
+    const transport = new StdioClientTransport({
+      command: process.execPath,
+      args: [SERVER_ENTRY],
+      cwd: PACKAGE_ROOT,
+      env: { ...process.env, MCP_TOOLSET: "teacher" },
+      stderr: "pipe",
+    });
+    const client = new Client(
+      { name: "school-record-teacher-e2e", version: "0.3.0" },
+      { capabilities: {} },
+    );
+
+    try {
+      await client.connect(transport);
+      assert.deepEqual((await client.listTools()).tools.map((tool) => tool.name), ["check_school_record"]);
+      const result = structured<{
+        status: string;
+        entries: Array<{ entryId: string; status: string; label: string }>;
+      }>(
+        "check_school_record",
+        await client.callTool(
+          {
+            name: "check_school_record",
+            arguments: {
+              entries: [
+                { entryId: "record_1", text: "빗면을 이용하면 필요한 힘이 줄어드는 까닭을 설명함." },
+                { entryId: "record_2", text: "기후변화가 환경에 미치는 영향을 설명함." },
+                { entryId: "record_3", text: "식물 세포를 관찰하여 핵과 세포벽의 위치를 확인함." },
+              ],
+            },
+          },
+          CallToolResultSchema,
+        ),
+      );
+      assert.equal(result.status, "pass");
+      assert.deepEqual(result.entries.map((entry) => entry.status), ["pass", "pass", "pass"]);
     } finally {
       await client.close();
     }
