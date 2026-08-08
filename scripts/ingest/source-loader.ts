@@ -17,7 +17,14 @@ export interface VerifyOneSourceInput {
 
 export function resolveInputPath(sourceDir: string, relativePath: string): string {
   const root = resolve(sourceDir);
-  const target = resolve(root, relativePath);
+  // Manifests are portable between Windows and POSIX runners. Normalize
+  // Windows separators before resolving so "..\outside.txt" cannot bypass
+  // the containment check on Linux.
+  const portablePath = relativePath.replaceAll("\\", "/");
+  if (/^[A-Za-z]:\//u.test(portablePath) || portablePath.startsWith("/")) {
+    throw new Error("Source path escapes source directory");
+  }
+  const target = resolve(root, portablePath);
   if (target !== root && !target.startsWith(`${root}${sep}`)) {
     throw new Error("Source path escapes source directory");
   }
