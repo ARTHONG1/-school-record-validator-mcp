@@ -1,7 +1,12 @@
 import type { RuleExplanation, SourceExcerpt } from "./evidence.ts";
 import type { FieldSpec } from "./rule-types.ts";
 import type { SearchResult } from "./search.ts";
-import type { BatchValidationResult, Finding, ValidationResult } from "./validator-types.ts";
+import type {
+  BatchValidationResult,
+  Finding,
+  TeacherReviewResult,
+  ValidationResult,
+} from "./validator-types.ts";
 
 const STATUS_LABELS: Record<ValidationResult["status"], string> = {
   pass: "탐지 없음",
@@ -59,6 +64,36 @@ export function formatBatchValidationResult(result: BatchValidationResult): stri
   for (const entry of result.entries) {
     lines.push(`- ${entry.entryId}: ${STATUS_LABELS[entry.result.status]} (${entry.result.findings.length}개 finding)`);
   }
+  return lines.join("\n");
+}
+
+export function formatTeacherReviewResult(result: TeacherReviewResult): string {
+  const label = result.status === "prohibited"
+    ? "기재 불가"
+    : result.status === "revise"
+      ? "수정 권장"
+      : "통과";
+  const lines = [
+    "종합: " + label,
+    "검토 문안: " + result.counts.total + "건 (통과 " + result.counts.pass
+      + " / 수정 권장 " + result.counts.revise
+      + " / 기재 불가 " + result.counts.prohibited + ")",
+  ];
+
+  for (const entry of result.entries) {
+    lines.push("- " + entry.entryId + ": " + entry.label);
+    if (entry.status !== "pass") {
+      lines.push("  이유: " + entry.reason);
+      for (const guidance of entry.improvementGuidance) {
+        lines.push("  개선: " + guidance);
+      }
+      for (const issue of entry.issues) {
+        if (issue.kind === "editorial") lines.push("  [자체 편집 권고 - 교육부 공식 금지 규정 아님]");
+      }
+    }
+  }
+  lines.push("※ " + result.rewritePolicy);
+  lines.push(result.disclaimer);
   return lines.join("\n");
 }
 

@@ -7,12 +7,14 @@ import {
   formatRuleExplanation,
   formatRulePackInfo,
   formatSearchResults,
+  formatTeacherReviewResult,
   formatSourceExcerpt,
   formatValidationResult,
 } from "./format.ts";
 import { inputParsers, outputSchemas } from "./schemas.ts";
 import type { GuidanceSearch } from "./search.ts";
 import type { FieldSpec } from "./rule-types.ts";
+import { createTeacherReviewService } from "./teacher-review.ts";
 import type { BatchEntry, RecordValidator, ValidationInput } from "./validator-types.ts";
 
 export interface Services {
@@ -93,7 +95,20 @@ function fieldsFromBundle(bundle: DataBundle): FieldSpec[] {
 }
 
 export function createHandlers(services: Services) {
+  const teacherReview = createTeacherReviewService(services.validator);
+
   return {
+    async check_school_record(args: unknown) {
+      try {
+        const input = parseInput(inputParsers.check_school_record, args);
+        const domainResult = teacherReview.review(input);
+        const output = outputSchemas.check_school_record.parse(domainResult);
+        return success({ ...output }, formatTeacherReviewResult(output));
+      } catch (error) {
+        return handleExpectedError(error);
+      }
+    },
+
     async validate_record_text(args: unknown) {
       try {
         const input = parseInput(inputParsers.validate_record_text, args);

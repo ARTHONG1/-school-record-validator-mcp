@@ -127,6 +127,32 @@ const validateBatchInput = z.object(validateBatchShape).strict().superRefine((va
   });
 });
 
+const teacherReviewEntry = z.object({
+  entryId: z.string().min(1).max(100),
+  text: z.string().min(1).max(200_000),
+  field: inputFieldKey.optional(),
+}).strict();
+
+const checkSchoolRecordShape = {
+  entries: z.array(teacherReviewEntry).min(1).max(100),
+  defaultField: inputFieldKey.default("subject_achievement_special"),
+  profile: privacySafeEnum(["official", "official_plus_editorial"]).default("official_plus_editorial"),
+};
+
+const checkSchoolRecordInput = z.object(checkSchoolRecordShape).strict().superRefine((value, context) => {
+  const ids = new Set<string>();
+  value.entries.forEach((entry, index) => {
+    if (ids.has(entry.entryId)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["entries", index, "entryId"],
+        message: "entryId must be unique",
+      });
+    }
+    ids.add(entry.entryId);
+  });
+});
+
 const searchGuidanceInput = z.object({
   query: z.string().min(1).max(200),
   limit: z.number().int().min(1).max(20).default(5),
@@ -254,6 +280,45 @@ const batchValidationResultSchema = z.object({
   }).strict()),
 }).strict();
 
+const teacherReviewIssueSchema = z.object({
+  ruleId: z.string(),
+  kind: z.enum(["official", "editorial"]),
+  status: z.enum(["revise", "prohibited"]),
+  reason: z.string(),
+  improvement: z.string(),
+  matchedText: z.string().max(80).optional(),
+  citations: z.array(z.object({
+    title: z.string(),
+    locatorLabel: z.string(),
+    quote: z.string(),
+  }).strict()),
+}).strict();
+
+const teacherEntryReviewSchema = z.object({
+  entryId: z.string(),
+  field: fieldKey,
+  status: z.enum(["pass", "revise", "prohibited"]),
+  label: z.enum(["통과", "수정 권장", "기재 불가"]),
+  reason: z.string(),
+  issues: z.array(teacherReviewIssueSchema),
+  improvementGuidance: z.array(z.string()),
+  teacherChecks: z.array(z.string()),
+}).strict();
+
+const teacherReviewResultSchema = z.object({
+  rulePackId: z.string(),
+  status: z.enum(["pass", "revise", "prohibited"]),
+  counts: z.object({
+    total: z.number().int().nonnegative(),
+    pass: z.number().int().nonnegative(),
+    revise: z.number().int().nonnegative(),
+    prohibited: z.number().int().nonnegative(),
+  }).strict(),
+  entries: z.array(teacherEntryReviewSchema),
+  rewritePolicy: z.string(),
+  disclaimer: z.string(),
+}).strict();
+
 const searchResultSchema = z.object({
   chunkId: z.string(),
   sourceId: z.string(),
@@ -327,6 +392,7 @@ const rulePackSourceSchema = z.object({
 }).strict();
 
 export const outputSchemas = {
+  check_school_record: teacherReviewResultSchema,
   validate_record_text: validationResultSchema,
   validate_record_batch: batchValidationResultSchema,
   search_record_guidance: z.object({ results: z.array(searchResultSchema) }).strict(),
@@ -356,6 +422,7 @@ export const outputSchemas = {
 } as const;
 
 export const inputShapes = {
+  check_school_record: checkSchoolRecordShape,
   validate_record_text: validationInput.shape,
   validate_record_batch: validateBatchShape,
   search_record_guidance: searchGuidanceInput.shape,
@@ -366,6 +433,7 @@ export const inputShapes = {
 } as const;
 
 export const inputParsers = {
+  check_school_record: checkSchoolRecordInput,
   validate_record_text: validationInput,
   validate_record_batch: validateBatchInput,
   search_record_guidance: searchGuidanceInput,
@@ -388,6 +456,19 @@ const LIMITATION =
   "이 결과는 공식 승인이나 법률 판단이 아님. 입력 provenance가 없으면 관찰 및 작성 경위를 확정할 수 없음.";
 
 export const TOOL_SPECS = {
+  check_school_record: {
+    title: "교사용 생기부 문안 점검",
+    description: [
+      "교사가 학교생활기록부 문안의 통과, 수정 권장, 기재 불가 판단을 요청하면 반드시 이 도구만 호출한다.",
+      "한 문장도 entries 배열 1건으로 전달한다.",
+      "입력 JSON의 record_1, record_2 같은 키는 entryId와 text 배열로 변환한다.",
+      "결과 status를 임의로 변경하지 말고 pass인 문안에 문제를 만들어내지 않는다.",
+      "수정문은 입력에 이미 있는 사실만 사용하며 새로운 활동이나 관찰 근거를 만들지 않는다.",
+      "이 결과는 공식 승인이나 법률 판단이 아니다.",
+    ].join(" "),
+    inputSchema: inputShapes.check_school_record,
+    outputSchema: outputSchemas.check_school_record.shape,
+  },
   validate_record_text: {
     title: "생활기록부 문안 검증",
     description: `생활기록부 문안을 검토, 교정 또는 작성하기 전에 먼저 호출한다. ${LIMITATION}`,

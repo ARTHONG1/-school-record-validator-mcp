@@ -105,6 +105,9 @@ describe("MCP tool handlers", () => {
     assert.ok(chunkId);
 
     const calls = {
+      check_school_record: () => handlers.check_school_record({
+        entries: [{ entryId: "record_1", text: "실험 결과를 비교하여 설명함." }],
+      }),
       validate_record_text: () => handlers.validate_record_text({
         field: "student_name",
         text: "김학생",
@@ -169,8 +172,11 @@ describe("MCP tool handlers", () => {
         { entryId: "same", field: "student_name", text: secret },
       ],
     });
+    const wrongTeacherShape = await handlers.check_school_record({
+      record: { record_1: secret },
+    });
 
-    for (const result of [nested, duplicate]) {
+    for (const result of [nested, duplicate, wrongTeacherShape]) {
       assert.equal(result.isError, true);
       assert.equal(result.structuredContent, undefined);
       assert.match(result.content[0]?.text ?? "", /입력/u);
