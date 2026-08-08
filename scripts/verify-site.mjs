@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const site = resolve(root, "site");
 const html = await readFile(resolve(site, "index.html"), "utf8");
-const required = ["School Record Validator MCP", "#connect", "#results", "#examples", "#faq", "needs_context", "validate_record_batch"];
+const required = ["School Record Validator MCP", "#connect", "#results", "#examples", "#faq", "check_school_record", "pass", "revise", "prohibited"];
 for (const value of required) if (!html.includes(value)) throw new Error(`site/index.html is missing required content: ${value}`);
 const forbidden = [/YOUR[_-]/iu, /C:\\Users\\/u, /Bearer\s+[^<\s]+/iu, /student[_-]?name\s*[:=]\s*(?!김철수)/iu, /google-analytics|plausible\.io|segment\.com/iu];
 for (const pattern of forbidden) if (pattern.test(html)) throw new Error(`forbidden site content matched: ${pattern}`);

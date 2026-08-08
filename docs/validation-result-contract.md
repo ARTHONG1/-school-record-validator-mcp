@@ -1,5 +1,28 @@
 # Validation Result Contract
 
+## 교사용 기본 계약
+
+기본 teacher 모드의 check_school_record가 실제 교사용 점검 결과를 반환합니다. 입력은 다음 한 가지 형태만 사용합니다.
+
+~~~json
+{
+  "entries": [
+    { "entryId": "record_1", "text": "빗면을 이용하면 필요한 힘이 줄어드는 까닭을 설명함." }
+  ]
+}
+~~~
+
+각 entry의 상태는 다음 세 가지입니다.
+
+| 상태 | 의미 |
+|---|---|
+| pass | 현재 규칙팩에서 금지 또는 수정 권장 표현이 탐지되지 않음 |
+| revise | 표현을 고치거나 교사가 실제 수행·근거를 확인해야 함 |
+| prohibited | 공식 금지 내용이 탐지되어 현재 표현 그대로 기재할 수 없음 |
+
+문안에 provenance가 없다는 이유만으로 revise나 prohibited가 되지 않습니다. 모든 결과의 teacherChecks에는 실제 수행 및 교사의 관찰·평가를 최종 확인하라는 공통 안내만 표시됩니다. MCP는 추천 수정문을 생성하지 않으며, 호출 AI가 원문에 있는 사실만 사용해 필요한 경우 작성합니다.
+
+## Expert 저수준 계약
 `validate_record_text`와 `validate_record_batch`는 2026 초등 규칙팩을 기준으로 문안 내용과 작성 경위 정보를 분리해 반환합니다.
 
 ## Two axes
@@ -50,4 +73,3 @@
 ## Search
 
 `search_record_guidance`는 외부 검색·임베딩 서비스 없이 활성 코퍼스를 결정적으로 검색합니다. BM25 계열 점수에 정확 구절, 공백을 제거한 한국어 합성어, heading 일치, 질의어 coverage를 함께 반영합니다. `sourceRoles`에는 `primary-guide`, `directive-body`, `verification-copy`, `directive-appendix`를 지정할 수 있습니다.
-
