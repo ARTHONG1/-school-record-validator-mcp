@@ -227,7 +227,7 @@ describe("school record validator stdio server", { timeout: 30_000 }, () => {
       stderr: "pipe",
     });
     const client = new Client(
-      { name: "school-record-teacher-e2e", version: "0.3.0" },
+      { name: "school-record-teacher-e2e", version: "0.4.0" },
       { capabilities: {} },
     );
 
@@ -236,7 +236,15 @@ describe("school record validator stdio server", { timeout: 30_000 }, () => {
       assert.deepEqual((await client.listTools()).tools.map((tool) => tool.name), ["check_school_record"]);
       const result = structured<{
         status: string;
-        entries: Array<{ entryId: string; status: string; label: string }>;
+        entries: Array<{
+          entryId: string;
+          status: "pass" | "revise" | "prohibited";
+          label: string;
+          rewritePlan: {
+            action: "none" | "rewrite" | "ask_evidence";
+            requiresRevalidation: boolean;
+          };
+        }>;
       }>(
         "check_school_record",
         await client.callTool(
@@ -245,16 +253,18 @@ describe("school record validator stdio server", { timeout: 30_000 }, () => {
             arguments: {
               entries: [
                 { entryId: "record_1", text: "빗면을 이용하면 필요한 힘이 줄어드는 까닭을 설명함." },
-                { entryId: "record_2", text: "기후변화가 환경에 미치는 영향을 설명함." },
-                { entryId: "record_3", text: "식물 세포를 관찰하여 핵과 세포벽의 위치를 확인함." },
+                { entryId: "record_2", text: "항상 완벽하게 실험함." },
+                { entryId: "record_3", text: "TOEIC에서 우수한 성적을 거둠." },
               ],
             },
           },
           CallToolResultSchema,
         ),
       );
-      assert.equal(result.status, "pass");
-      assert.deepEqual(result.entries.map((entry) => entry.status), ["pass", "pass", "pass"]);
+      assert.equal(result.status, "prohibited");
+      assert.deepEqual(result.entries.map((entry) => entry.status), ["pass", "revise", "prohibited"]);
+      assert.deepEqual(result.entries.map((entry) => entry.rewritePlan.action), ["none", "rewrite", "ask_evidence"]);
+      assert.deepEqual(result.entries.map((entry) => entry.rewritePlan.requiresRevalidation), [false, true, true]);
     } finally {
       await client.close();
     }

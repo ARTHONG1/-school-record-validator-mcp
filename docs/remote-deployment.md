@@ -41,7 +41,7 @@ gcloud run deploy school-record-validator-mcp \
   --source . \
   --region asia-northeast3 \
   --allow-unauthenticated \
-  --set-env-vars MCP_ENABLE_LEGACY_SSE=false \
+  --set-env-vars MCP_ENABLE_LEGACY_SSE=false,MCP_TOOLSET=teacher \
   --min 0 \
   --max 1 \
   --memory 512Mi \
@@ -52,6 +52,17 @@ gcloud run deploy school-record-validator-mcp \
 ```
 
 이 구성은 헤더 없이 공개 호출을 허용합니다. 기본 MCP 도구셋은 교사용 check_school_record 하나이며, 저수준 7개 도구가 필요한 유지관리자는 MCP_TOOLSET=expert를 사용합니다. 별도 애플리케이션 요청 횟수 제한은 적용하지 않습니다. HTTP 본문은 최대 10MB, 문안은 건당 최대 200,000자, 배치는 최대 100건이며 Cloud Run 최대 인스턴스 1과 월 예산 알림으로 비용을 통제합니다.
+
+배포 후 MCP smoke test나 health check가 실패하면 직전 정상 리비전으로 트래픽을 되돌립니다.
+
+```bash
+gcloud run services update-traffic school-record-validator-mcp \
+  --project school-record-validator-mcp \
+  --region asia-northeast3 \
+  --to-revisions school-record-validator-mcp-00006-gf4=100
+```
+
+롤백 뒤 `/health`와 `check_school_record`를 다시 확인하고, 실패한 리비전은 원인 분석을 위해 삭제하지 않습니다.
 
 ## 등록 화면 입력값
 

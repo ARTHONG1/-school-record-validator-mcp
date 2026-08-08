@@ -125,7 +125,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const transport = new StreamableHTTPClientTransport(new URL("/mcp", baseUrl), {
         requestInit: { headers: authHeaders },
       });
-      const client = new Client({ name: "teacher-http-test", version: "0.3.0" });
+      const client = new Client({ name: "teacher-http-test", version: "0.4.0" });
       try {
         await client.connect(transport);
         assert.deepEqual(toolNames(await client.listTools()), ["check_school_record"]);
@@ -140,8 +140,16 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
           },
         }));
         assert.notEqual(result.isError, true);
-        const entries = result.structuredContent?.entries as Array<{ status: string }> | undefined;
+        const entries = result.structuredContent?.entries as Array<{
+          status: "pass" | "revise" | "prohibited";
+          rewritePlan: {
+            action: "none" | "rewrite" | "ask_evidence";
+            requiresRevalidation: boolean;
+          };
+        }> | undefined;
         assert.deepEqual(entries?.map((entry) => entry.status), ["pass", "revise", "prohibited"]);
+        assert.deepEqual(entries?.map((entry) => entry.rewritePlan.action), ["none", "rewrite", "ask_evidence"]);
+        assert.deepEqual(entries?.map((entry) => entry.rewritePlan.requiresRevalidation), [false, true, true]);
       } finally {
         await client.close();
       }

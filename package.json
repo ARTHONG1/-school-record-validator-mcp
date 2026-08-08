@@ -33,6 +33,7 @@
     "seal:data": "npm run build:ingest && node .ingest-dist/scripts/seal-data.js",
     "start": "node dist/index.js",
     "start:remote": "node dist/remote.js",
+    "smoke:remote": "node scripts/smoke-remote.mjs",
     "test": "node --test \"tests/*.test.ts\"",
     "test:file": "node --test",
     "test:e2e": "node --test tests/e2e/end-to-end.test.ts tests/remote-server.test.ts",
