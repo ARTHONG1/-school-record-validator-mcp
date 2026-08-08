@@ -8,7 +8,8 @@ import { createServer } from "../src/server.ts";
 import { TOOL_SPECS } from "../src/schemas.ts";
 import { createHandlerTestServices } from "./handlers.test.ts";
 
-const expectedToolNames = [
+const expertToolNames = [
+  "check_school_record",
   "explain_record_rule",
   "get_source_excerpt",
   "list_record_fields",
@@ -18,8 +19,8 @@ const expectedToolNames = [
   "validate_record_text",
 ] as const;
 
-async function connectTestClient() {
-  const server = createServer(createHandlerTestServices());
+async function connectTestClient(options: { toolset?: "teacher" | "expert" } = {}) {
+  const server = createServer(createHandlerTestServices(), options);
   const client = new Client({ name: "school-record-validator-test", version: "0.1.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
@@ -38,23 +39,22 @@ async function callToolSafely(
 }
 
 describe("MCP stdio server contract", () => {
-  it("registers exactly seven tools with explicit input and output schemas", async () => {
+  it("registers only the teacher tool by default", async () => {
     const { client, server } = await connectTestClient();
     try {
       const result = await client.listTools();
-      assert.deepEqual(result.tools.map((tool) => tool.name).sort(), [...expectedToolNames]);
+      assert.deepEqual(result.tools.map((tool) => tool.name), ["check_school_record"]);
       assert.ok(result.tools.every((tool) => tool.inputSchema));
       assert.ok(result.tools.every((tool) => tool.outputSchema));
-      assert.ok(result.tools.every((tool) => tool.description?.includes("공식 승인이나 법률 판단이 아님")));
-      assert.ok(result.tools.every((tool) => tool.description?.includes("provenance")));
+      assert.ok(result.tools.every((tool) => tool.description?.includes("공식 승인이나 법률 판단")));
     } finally {
       await client.close();
       await server.close();
     }
   });
 
-  it("keeps all seven raw schema registrations in sync with TOOL_SPECS", () => {
-    assert.deepEqual(Object.keys(TOOL_SPECS).sort(), [...expectedToolNames]);
+  it("keeps all raw schema registrations in sync with TOOL_SPECS", () => {
+    assert.deepEqual(Object.keys(TOOL_SPECS).sort(), [...expertToolNames].sort());
     for (const spec of Object.values(TOOL_SPECS)) {
       assert.ok(spec.title.length > 0);
       assert.ok(spec.description.length > 0);
@@ -64,7 +64,7 @@ describe("MCP stdio server contract", () => {
   });
 
   it("strips an unknown top-level key before the strict handler and rejects a nested one", async () => {
-    const { client, server } = await connectTestClient();
+    const { client, server } = await connectTestClient({ toolset: "expert" });
     const secret = "UNIQUE-SERVER-STUDENT-SECRET-2026";
     try {
       const topLevel = await client.callTool({
@@ -195,7 +195,7 @@ describe("MCP stdio server contract", () => {
           throw new Error(`database failure: ${secret}`);
         },
       },
-    });
+    }, { toolset: "expert" });
     const client = new Client({ name: "school-record-validator-test", version: "0.1.0" });
     const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
     await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);

@@ -5,10 +5,13 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { defaultPackageRoot, loadDataBundle } from "./data-loader.ts";
 import { createServer } from "./server.ts";
 import { createServices } from "./services.ts";
+import { parseToolset } from "./toolset.ts";
 
 export async function main(): Promise<void> {
   const bundle = await loadDataBundle(defaultPackageRoot());
-  const server = createServer(createServices(bundle));
+  const server = createServer(createServices(bundle), {
+    toolset: parseToolset(process.env.MCP_TOOLSET),
+  });
   await server.connect(new StdioServerTransport());
 }
 

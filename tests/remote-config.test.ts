@@ -10,6 +10,7 @@ describe("remote MCP configuration", () => {
       authToken: undefined,
       allowedHosts: undefined,
       enableLegacySse: true,
+      toolset: "teacher",
     });
   });
 
@@ -19,12 +20,14 @@ describe("remote MCP configuration", () => {
       MCP_AUTH_TOKEN: "a".repeat(32),
       MCP_ALLOWED_HOSTS: "example.run.app, mcp.example.com ",
       MCP_ENABLE_LEGACY_SSE: "false",
+      MCP_TOOLSET: "expert",
     }), {
       host: "0.0.0.0",
       port: 9090,
       authToken: "a".repeat(32),
       allowedHosts: ["example.run.app", "mcp.example.com"],
       enableLegacySse: false,
+      toolset: "expert",
     });
   });
 
@@ -36,6 +39,7 @@ describe("remote MCP configuration", () => {
       { MCP_AUTH_TOKEN: secret },
       { MCP_ENABLE_LEGACY_SSE: "maybe" },
       { MCP_ALLOWED_HOSTS: "example.com,,other.example" },
+      { MCP_TOOLSET: "unknown" },
     ]) {
       assert.throws(
         () => parseRemoteConfig(env),

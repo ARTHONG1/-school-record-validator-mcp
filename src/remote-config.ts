@@ -1,9 +1,12 @@
+import { parseToolset, type Toolset } from "./toolset.ts";
+
 export interface RemoteConfig {
   host: string;
   port: number;
   authToken?: string;
   allowedHosts?: string[];
   enableLegacySse: boolean;
+  toolset: Toolset;
 }
 
 type Environment = Readonly<Record<string, string | undefined>>;
@@ -43,5 +46,6 @@ export function parseRemoteConfig(env: Environment): RemoteConfig {
     authToken,
     allowedHosts: parseAllowedHosts(env.MCP_ALLOWED_HOSTS),
     enableLegacySse: parseBoolean(env.MCP_ENABLE_LEGACY_SSE),
+    toolset: parseToolset(env.MCP_TOOLSET),
   };
 }

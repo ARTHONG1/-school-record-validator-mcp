@@ -71,7 +71,7 @@ export function createRemoteApp(services: Services, config: RemoteConfig): Remot
       return;
     }
 
-    const server = createServer(services);
+    const server = createServer(services, { toolset: config.toolset });
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
@@ -96,7 +96,7 @@ export function createRemoteApp(services: Services, config: RemoteConfig): Remot
   if (config.enableLegacySse) {
     app.get("/sse", requireAuth, async (_req, res) => {
       const transport = new SSEServerTransport("/messages", res);
-      const server = createServer(services);
+      const server = createServer(services, { toolset: config.toolset });
       const sessionId = transport.sessionId;
       sessions.set(sessionId, { transport, server });
       transport.onclose = () => {

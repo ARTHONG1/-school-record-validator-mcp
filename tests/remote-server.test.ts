@@ -18,6 +18,7 @@ async function withRemoteServer(
   run: (baseUrl: URL) => Promise<void>,
   options: {
     authToken?: string;
+    toolset?: "teacher" | "expert";
   } = { authToken: TOKEN },
 ): Promise<void> {
   const remote = await listenRemoteApp(
@@ -27,6 +28,7 @@ async function withRemoteServer(
       authToken: options.authToken,
       allowedHosts: ["127.0.0.1"],
       enableLegacySse: true,
+      toolset: options.toolset ?? "expert",
     }),
     { host: "127.0.0.1", port: 0 },
   );

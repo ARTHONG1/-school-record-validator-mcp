@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult, TextContent } from "@modelcontextprotocol/sdk/types.js";
 import { createHandlers, type Services, type ToolHandlers } from "./handlers.ts";
 import { TOOL_SPECS, type ToolName } from "./schemas.ts";
+import type { Toolset } from "./toolset.ts";
 
 type HandlerResult = Awaited<ReturnType<ToolHandlers[ToolName]>>;
 
@@ -32,12 +33,23 @@ async function invokeSafely(
   }
 }
 
-export function createServer(services: Services): McpServer {
+export function createServer(
+  services: Services,
+  options: { toolset?: Toolset } = {},
+): McpServer {
   const server = new McpServer({
     name: "school-record-validator",
-    version: "0.1.0",
+    version: "0.3.0",
   });
   const handlers = createHandlers(services);
+
+  server.registerTool(
+    "check_school_record",
+    TOOL_SPECS.check_school_record,
+    (args) => invokeSafely(() => handlers.check_school_record(args)),
+  );
+
+  if ((options.toolset ?? "teacher") !== "expert") return server;
 
   server.registerTool(
     "validate_record_text",
