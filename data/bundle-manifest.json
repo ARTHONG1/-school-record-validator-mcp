@@ -1,5 +1,5 @@
 {
-  "bundleContentSha256": "F8BC1F6AF79740073F4096168083C08EA32200E7EB8BBDD1C1E67B74F0CE03CE",
+  "bundleContentSha256": "F51F26A2DA4E818957D3D6FD2FAFF554540935E6A4F6315750AC0625720AB04B",
   "files": [
     {
       "path": "data/corpus/active-chunks.json",
@@ -23,7 +23,7 @@
     },
     {
       "path": "data/rules/kr-moe-school-record-elementary-2026.1.json",
-      "sha256": "A4F47E3078AEBF447614D9E9D4C72D13F1E24FCE2BE44D636B2E49BAD30AD65D"
+      "sha256": "A47E9A9FDFE9652736789FFA5B978FC5FDB4B9D34C5BB6549998641C40E07AAE"
     },
     {
       "path": "sources/manifest.json",

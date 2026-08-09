@@ -111,6 +111,13 @@ export interface TeacherEntryReview {
 
 export interface TeacherReviewResult {
   rulePackId: string;
+  catalogVersion: string;
+  semanticReviewCatalog: Array<{
+    ruleId: string;
+    action: "prohibited" | "revise";
+    concept: string;
+    semanticHints: string[];
+  }>;
   status: TeacherReviewStatus;
   counts: { total: number; pass: number; revise: number; prohibited: number };
   entries: TeacherEntryReview[];

@@ -45,6 +45,25 @@ export interface FieldSpec {
   evidenceIds: [string, ...string[]];
 }
 
+export interface SemanticTermPattern {
+  termId: string;
+  pattern: string;
+}
+
+export interface SemanticVerifierPattern {
+  patternId: string;
+  pattern: string;
+  termPatterns: SemanticTermPattern[];
+}
+
+export interface SemanticReviewDefinition {
+  concept: string;
+  semanticHints: string[];
+  confirmPatterns: SemanticVerifierPattern[];
+  supportPatterns: Array<{ patternId: string; pattern: string }>;
+  negativePatterns: Array<{ patternId: string; pattern: string }>;
+}
+
 export interface BaseRule {
   id: string;
   title: string;
@@ -67,6 +86,7 @@ export interface OfficialPhraseRule extends BaseRule {
     patterns: string[];
     caseInsensitive?: boolean;
   };
+  semanticReview?: SemanticReviewDefinition;
 }
 
 export interface EditorialPhraseRule extends BaseRule {
@@ -80,6 +100,7 @@ export interface EditorialPhraseRule extends BaseRule {
     patterns: string[];
     caseInsensitive?: boolean;
   };
+  semanticReview?: SemanticReviewDefinition;
 }
 
 export type PhraseRule = OfficialPhraseRule | EditorialPhraseRule;

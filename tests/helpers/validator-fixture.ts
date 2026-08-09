@@ -199,6 +199,17 @@ function phraseRule(input: {
     outcome: input.outcome,
     evidenceIds: evidenceIds(input.evidenceId),
     detector: input.detector,
+    semanticReview: {
+      concept: input.title,
+      semanticHints: input.detector.patterns.slice(0, 3),
+      confirmPatterns: [{
+        patternId: `${input.id}-CONFIRM`,
+        pattern: input.detector.patterns[0],
+        termPatterns: [{ termId: `${input.id}-TERM`, pattern: input.detector.patterns[0] }],
+      }],
+      supportPatterns: [{ patternId: `${input.id}-SUPPORT`, pattern: input.detector.patterns[0] }],
+      negativePatterns: [{ patternId: `${input.id}-NEGATIVE`, pattern: "(?!)" }],
+    },
   };
 }
 

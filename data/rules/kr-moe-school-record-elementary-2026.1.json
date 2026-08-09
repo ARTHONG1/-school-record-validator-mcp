@@ -4,7 +4,11 @@
   "academicYear": 2026,
   "effectiveFrom": "2026-03-01",
   "defaultProfile": "official",
-  "authorityOrder": [100, 80, 10],
+  "authorityOrder": [
+    100,
+    80,
+    10
+  ],
   "fields": {
     "student_name": {
       "key": "student_name",
@@ -19,7 +23,9 @@
       "contentRuleMode": "none",
       "provenanceMode": "none",
       "lengthRuleId": "LENGTH-STUDENT-NAME",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     "address": {
       "key": "address",
@@ -34,7 +40,9 @@
       "contentRuleMode": "none",
       "provenanceMode": "none",
       "lengthRuleId": "LENGTH-ADDRESS",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     "academic_status_special": {
       "key": "academic_status_special",
@@ -49,7 +57,9 @@
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "none",
       "lengthRuleId": "LENGTH-ACADEMIC-STATUS-SPECIAL",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     "attendance_special": {
       "key": "attendance_special",
@@ -64,25 +74,35 @@
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "none",
       "lengthRuleId": "LENGTH-ATTENDANCE-SPECIAL",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     "creative_autonomy_club_special": {
       "key": "creative_autonomy_club_special",
       "label": "창의적 체험활동 자율·자치활동 및 동아리활동 특기사항",
-      "lengthPolicy": { "kind": "system-range" },
+      "lengthPolicy": {
+        "kind": "system-range"
+      },
       "applicableTo": "all-elementary",
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "teacher-observation",
-      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+      "evidenceIds": [
+        "EV-GUIDE-79-CREATIVE-SCOPE"
+      ]
     },
     "creative_career_special": {
       "key": "creative_career_special",
       "label": "창의적 체험활동 진로활동 특기사항",
-      "lengthPolicy": { "kind": "system-range" },
+      "lengthPolicy": {
+        "kind": "system-range"
+      },
       "applicableTo": "all-elementary",
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "teacher-observation",
-      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+      "evidenceIds": [
+        "EV-GUIDE-79-CREATIVE-SCOPE"
+      ]
     },
     "volunteer_activity": {
       "key": "volunteer_activity",
@@ -97,34 +117,48 @@
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "activity-evidence",
       "lengthRuleId": "LENGTH-VOLUNTEER-ACTIVITY",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     "daily_life_special": {
       "key": "daily_life_special",
       "label": "일상생활 활동상황 특기사항",
-      "lengthPolicy": { "kind": "system-range" },
+      "lengthPolicy": {
+        "kind": "system-range"
+      },
       "applicableTo": "special-basic-curriculum",
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "teacher-observation",
-      "evidenceIds": ["EV-DIRECTIVE-4-2"]
+      "evidenceIds": [
+        "EV-DIRECTIVE-4-2"
+      ]
     },
     "subject_achievement_special": {
       "key": "subject_achievement_special",
       "label": "교과학습발달상황 성취수준 및 특기사항",
-      "lengthPolicy": { "kind": "system-range" },
+      "lengthPolicy": {
+        "kind": "system-range"
+      },
       "applicableTo": "all-elementary",
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "teacher-observation",
-      "evidenceIds": ["EV-GUIDE-100-SUBJECT"]
+      "evidenceIds": [
+        "EV-GUIDE-100-SUBJECT"
+      ]
     },
     "behavior_opinion": {
       "key": "behavior_opinion",
       "label": "행동특성 및 종합의견",
-      "lengthPolicy": { "kind": "system-range" },
+      "lengthPolicy": {
+        "kind": "system-range"
+      },
       "applicableTo": "all-elementary",
       "contentRuleMode": "global-prohibitions",
       "provenanceMode": "teacher-observation",
-      "evidenceIds": ["EV-GUIDE-102-BEHAVIOR"]
+      "evidenceIds": [
+        "EV-GUIDE-102-BEHAVIOR"
+      ]
     }
   },
   "rules": [
@@ -133,7 +167,9 @@
       "title": "성명 입력 한도",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["student_name"],
+      "appliesTo": [
+        "student_name"
+      ],
       "message": "성명은 60Byte를 초과하여 입력할 수 없습니다.",
       "recommendation": "NEIS Byte 기준 60Byte 이내로 성명을 확인하십시오.",
       "exceptions": [],
@@ -141,14 +177,18 @@
       "field": "student_name",
       "maxBytes": 60,
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     {
       "id": "LENGTH-ADDRESS",
       "title": "주소 입력 한도",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["address"],
+      "appliesTo": [
+        "address"
+      ],
       "message": "주소는 900Byte를 초과하여 입력할 수 없습니다.",
       "recommendation": "NEIS Byte 기준 900Byte 이내로 주소를 정리하십시오.",
       "exceptions": [],
@@ -156,14 +196,18 @@
       "field": "address",
       "maxBytes": 900,
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     {
       "id": "LENGTH-ACADEMIC-STATUS-SPECIAL",
       "title": "학적사항 특기사항 입력 한도",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["academic_status_special"],
+      "appliesTo": [
+        "academic_status_special"
+      ],
       "message": "학적사항 특기사항은 1,500Byte를 초과하여 입력할 수 없습니다.",
       "recommendation": "NEIS Byte 기준 1,500Byte 이내로 내용을 정리하십시오.",
       "exceptions": [],
@@ -171,14 +215,18 @@
       "field": "academic_status_special",
       "maxBytes": 1500,
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     {
       "id": "LENGTH-ATTENDANCE-SPECIAL",
       "title": "출결상황 특기사항 입력 한도",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["attendance_special"],
+      "appliesTo": [
+        "attendance_special"
+      ],
       "message": "출결상황 특기사항은 1,500Byte를 초과하여 입력할 수 없습니다.",
       "recommendation": "NEIS Byte 기준 1,500Byte 이내로 내용을 정리하십시오.",
       "exceptions": [],
@@ -186,14 +234,18 @@
       "field": "attendance_special",
       "maxBytes": 1500,
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     {
       "id": "LENGTH-VOLUNTEER-ACTIVITY",
       "title": "봉사활동 실적별 활동내용 입력 한도",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["volunteer_activity"],
+      "appliesTo": [
+        "volunteer_activity"
+      ],
       "message": "봉사활동 실적별 활동내용은 150Byte를 초과하여 입력할 수 없습니다.",
       "recommendation": "각 실적의 활동내용을 NEIS Byte 기준 150Byte 이내로 정리하십시오.",
       "exceptions": [],
@@ -201,7 +253,9 @@
       "field": "volunteer_activity",
       "maxBytes": 150,
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-150-LIMITS"]
+      "evidenceIds": [
+        "EV-GUIDE-150-LIMITS"
+      ]
     },
     {
       "id": "OFFICIAL-DIRECT-OBSERVATION",
@@ -217,11 +271,19 @@
       ],
       "message": "교사가 직접 관찰·평가한 근거가 확인되어야 합니다.",
       "recommendation": "교사의 직접 관찰 여부와 예외 근거를 확인하십시오.",
-      "exceptions": ["공식 문서가 인정하는 예외 자료는 별도 근거와 함께 교사가 확인해야 합니다."],
+      "exceptions": [
+        "공식 문서가 인정하는 예외 자료는 별도 근거와 함께 교사가 확인해야 합니다."
+      ],
       "kind": "metadata",
       "check": "direct-observation",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-DIRECTIVE-4-2", "EV-GUIDE-27-STUDENT-MATERIALS"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-DIRECTIVE-4-2",
+        "EV-GUIDE-27-STUDENT-MATERIALS"
+      ]
     },
     {
       "id": "OFFICIAL-LANGUAGE-TEST",
@@ -242,7 +304,9 @@
       "recommendation": "시험명과 점수·등급을 삭제하고 학교교육활동에서 관찰한 역량으로 서술하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "literal-any",
         "caseInsensitive": true,
@@ -271,6 +335,40 @@
           "한자급수인증시험",
           "한자자격검정"
         ]
+      },
+      "semanticReview": {
+        "concept": "공인어학시험 기재 금지",
+        "semanticHints": [
+          "TOEIC",
+          "TOEFL",
+          "TEPS",
+          "HSK",
+          "JPT"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-LANGUAGE-TEST-CONFIRM",
+            "pattern": "TOEIC",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-LANGUAGE-TEST-TERM",
+                "pattern": "TOEIC"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-LANGUAGE-TEST-SUPPORT",
+            "pattern": "TOEIC"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-LANGUAGE-TEST-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -290,13 +388,47 @@
       ],
       "message": "교내·외 대회 참가 또는 수상실적은 기재할 수 없습니다.",
       "recommendation": "대회명, 참가·출전 사실, 성적과 수상실적을 삭제하십시오.",
-      "exceptions": ["일반 수업 활동을 단순히 발표회라고 부르는 경우에는 이 규칙을 적용하지 않습니다."],
+      "exceptions": [
+        "일반 수업 활동을 단순히 발표회라고 부르는 경우에는 이 규칙을 적용하지 않습니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)"
+        ]
+      },
+      "semanticReview": {
+        "concept": "대회 참가·수상실적 기재 금지",
+        "semanticHints": [
+          "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-CONTEST-PARTICIPATION-AWARD-CONFIRM",
+            "pattern": "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-CONTEST-PARTICIPATION-AWARD-TERM",
+                "pattern": "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-CONTEST-PARTICIPATION-AWARD-SUPPORT",
+            "pattern": "(?:대회[^\\n.!?。]{0,60}(?:참가|참여|출전|성적|수상|입상|등위)|(?:참가|참여|출전|성적|수상|입상|등위)[^\\n.!?。]{0,60}대회)"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-CONTEST-PARTICIPATION-AWARD-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -319,11 +451,43 @@
       "recommendation": "교외 수상명과 수여기관을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "교외상 기재 금지",
+        "semanticHints": [
+          "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-OUTSIDE-AWARD-CONFIRM",
+            "pattern": "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-OUTSIDE-AWARD-TERM",
+                "pattern": "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-OUTSIDE-AWARD-SUPPORT",
+            "pattern": "(?:교외상|교외\\s*기관[^\\n.!?。]{0,60}(?:수상|입상|표창)|외부\\s*기관[^\\n.!?。]{0,60}(?:표창장|감사장|공로상|수상))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-OUTSIDE-AWARD-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -346,11 +510,43 @@
       "recommendation": "인증시험 명칭과 응시·성적 내용을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)"
+        ]
+      },
+      "semanticReview": {
+        "concept": "인증시험 기재 금지",
+        "semanticHints": [
+          "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-CERTIFICATION-TEST-CONFIRM",
+            "pattern": "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-CERTIFICATION-TEST-TERM",
+                "pattern": "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-CERTIFICATION-TEST-SUPPORT",
+            "pattern": "(?:인증시험[^\\n.!?。]{0,40}(?:참가|참여|응시|성적|합격)|(?:참가|참여|응시|성적|합격)[^\\n.!?。]{0,40}인증시험)"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-CERTIFICATION-TEST-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -371,13 +567,47 @@
       ],
       "message": "논문 투고·등재·학회 발표 실적은 기재할 수 없습니다.",
       "recommendation": "논문 또는 학회 발표 실적을 삭제하십시오.",
-      "exceptions": ["수업 중 작성한 일반 탐구 보고서는 논문 실적으로 표현하지 않은 경우 제외합니다."],
+      "exceptions": [
+        "수업 중 작성한 일반 탐구 보고서는 논문 실적으로 표현하지 않은 경우 제외합니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)"
+        ]
+      },
+      "semanticReview": {
+        "concept": "논문 발표·등재 기재 금지",
+        "semanticHints": [
+          "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-PAPER-PUBLICATION-CONFIRM",
+            "pattern": "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-PAPER-PUBLICATION-TERM",
+                "pattern": "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-PAPER-PUBLICATION-SUPPORT",
+            "pattern": "(?:논문[^\\n.!?。]{0,50}(?:투고|등재|학회\\s*발표)|(?:투고|등재|학회\\s*발표)[^\\n.!?。]{0,50}논문)"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-PAPER-PUBLICATION-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -398,13 +628,47 @@
       ],
       "message": "도서 출간·출판 실적은 기재할 수 없습니다.",
       "recommendation": "출간·출판 실적을 삭제하고 학교 수업에서 확인한 활동만 서술하십시오.",
-      "exceptions": ["학교 수업에서 책을 읽거나 교내 산출물을 만든 사실 자체는 출간 실적이 아닙니다."],
+      "exceptions": [
+        "학교 수업에서 책을 읽거나 교내 산출물을 만든 사실 자체는 출간 실적이 아닙니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "도서 출간 기재 금지",
+        "semanticHints": [
+          "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-BOOK-PUBLICATION-CONFIRM",
+            "pattern": "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-BOOK-PUBLICATION-TERM",
+                "pattern": "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-BOOK-PUBLICATION-SUPPORT",
+            "pattern": "(?:(?:도서|책)[^\\n.!?。]{0,40}(?:출간|출판)|(?:출간|출판)[^\\n.!?。]{0,40}(?:도서|책))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-BOOK-PUBLICATION-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -425,13 +689,47 @@
       ],
       "message": "특허·실용신안·상표·디자인의 출원 또는 등록 실적은 기재할 수 없습니다.",
       "recommendation": "지식재산권 출원·등록 내용을 삭제하십시오.",
-      "exceptions": ["수업에서 발명 아이디어를 탐구한 사실은 출원·등록 실적으로 표현하지 않은 경우 제외합니다."],
+      "exceptions": [
+        "수업에서 발명 아이디어를 탐구한 사실은 출원·등록 실적으로 표현하지 않은 경우 제외합니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "지식재산권 출원·등록 기재 금지",
+        "semanticHints": [
+          "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-INTELLECTUAL-PROPERTY-CONFIRM",
+            "pattern": "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-INTELLECTUAL-PROPERTY-TERM",
+                "pattern": "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-INTELLECTUAL-PROPERTY-SUPPORT",
+            "pattern": "(?:(?:특허|실용신안|상표|디자인)[^\\n.!?。]{0,40}(?:출원|등록)|(?:출원|등록)[^\\n.!?。]{0,40}(?:특허|실용신안|상표|디자인))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-INTELLECTUAL-PROPERTY-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -454,10 +752,52 @@
       "recommendation": "해외 활동실적을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "literal-any",
-        "patterns": ["어학연수", "해외 봉사", "해외봉사", "해외 활동실적", "해외활동실적"]
+        "patterns": [
+          "어학연수",
+          "해외 봉사",
+          "해외봉사",
+          "해외 활동실적",
+          "해외활동실적"
+        ]
+      },
+      "semanticReview": {
+        "concept": "해외 활동실적 기재 금지",
+        "semanticHints": [
+          "어학연수",
+          "해외 봉사",
+          "해외봉사",
+          "해외 활동실적",
+          "해외활동실적"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-OVERSEAS-ACTIVITY-CONFIRM",
+            "pattern": "어학연수",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-OVERSEAS-ACTIVITY-TERM",
+                "pattern": "어학연수"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-OVERSEAS-ACTIVITY-SUPPORT",
+            "pattern": "어학연수"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-OVERSEAS-ACTIVITY-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -477,13 +817,47 @@
       ],
       "message": "부모·친인척의 직업, 직장, 직위 또는 경제적 지위는 기재할 수 없습니다.",
       "recommendation": "가족의 사회경제적 지위를 드러내는 내용을 삭제하십시오.",
-      "exceptions": ["가족을 배려하는 태도처럼 직업·지위와 무관한 관찰 내용은 제외합니다."],
+      "exceptions": [
+        "가족을 배려하는 태도처럼 직업·지위와 무관한 관찰 내용은 제외합니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "부모·친인척 사회경제적 지위 기재 금지",
+        "semanticHints": [
+          "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-PARENT-SOCIOECONOMIC-STATUS-CONFIRM",
+            "pattern": "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-PARENT-SOCIOECONOMIC-STATUS-TERM",
+                "pattern": "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-PARENT-SOCIOECONOMIC-STATUS-SUPPORT",
+            "pattern": "(?:(?:부모|친인척|아버지|어머니)[^\\n.!?。]{0,40}(?:직종|직업|직장|직위|경제력)|(?:직종|직업|직장|직위|경제력)[^\\n.!?。]{0,40}(?:부모|친인척|아버지|어머니))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-PARENT-SOCIOECONOMIC-STATUS-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -506,10 +880,46 @@
       "recommendation": "장학생·장학금 관련 내용을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-18-PROHIBITIONS"],
+      "evidenceIds": [
+        "EV-GUIDE-18-PROHIBITIONS"
+      ],
       "detector": {
         "type": "literal-any",
-        "patterns": ["장학생", "장학금"]
+        "patterns": [
+          "장학생",
+          "장학금"
+        ]
+      },
+      "semanticReview": {
+        "concept": "장학금 관련 내용 기재 금지",
+        "semanticHints": [
+          "장학생",
+          "장학금"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-SCHOLARSHIP-CONFIRM",
+            "pattern": "장학생",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-SCHOLARSHIP-TERM",
+                "pattern": "장학생"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-SCHOLARSHIP-SUPPORT",
+            "pattern": "장학생"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-SCHOLARSHIP-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -534,12 +944,45 @@
         "봉사활동 장소 또는 주관기관명은 이 문구 규칙의 적용 대상에서 제외합니다."
       ],
       "outcome": "review",
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)",
           "(?:강사명\\s*[:：]?\\s*[가-힣]{2,4}|강사\\s+[가-힣]{2,4}(?:님|선생님)?)"
+        ]
+      },
+      "semanticReview": {
+        "concept": "특정 대학·기관·상호·강사명 검토",
+        "semanticHints": [
+          "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)",
+          "(?:강사명\\s*[:：]?\\s*[가-힣]{2,4}|강사\\s+[가-힣]{2,4}(?:님|선생님)?)"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-SPECIFIC-NAME-CONFIRM",
+            "pattern": "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-SPECIFIC-NAME-TERM",
+                "pattern": "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-SPECIFIC-NAME-SUPPORT",
+            "pattern": "[가-힣A-Za-z0-9]{2,30}(?:대학교|대학|학원|연구소|센터|회사|기업)"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-SPECIFIC-NAME-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -560,12 +1003,48 @@
       ],
       "message": "자격증 명칭 또는 취득·합격 사실은 기재할 수 없습니다.",
       "recommendation": "자격증 명칭과 취득·합격 사실을 삭제하십시오.",
-      "exceptions": ["자격이라는 일반어만으로는 자동 차단하지 않습니다."],
+      "exceptions": [
+        "자격이라는 일반어만으로는 자동 차단하지 않습니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ],
       "detector": {
         "type": "regex-any",
-        "patterns": ["자격증[^\\n.!?。]{0,30}(?:취득|합격)"]
+        "patterns": [
+          "자격증[^\\n.!?。]{0,30}(?:취득|합격)"
+        ]
+      },
+      "semanticReview": {
+        "concept": "자격증 명칭·취득 사실 기재 금지",
+        "semanticHints": [
+          "자격증[^\\n.!?。]{0,30}(?:취득|합격)"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "OFFICIAL-QUALIFICATION-CONFIRM",
+            "pattern": "자격증[^\\n.!?。]{0,30}(?:취득|합격)",
+            "termPatterns": [
+              {
+                "termId": "OFFICIAL-QUALIFICATION-TERM",
+                "pattern": "자격증[^\\n.!?。]{0,30}(?:취득|합격)"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "OFFICIAL-QUALIFICATION-SUPPORT",
+            "pattern": "자격증[^\\n.!?。]{0,30}(?:취득|합격)"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "OFFICIAL-QUALIFICATION-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -585,8 +1064,13 @@
       "exceptions": [],
       "kind": "metadata",
       "check": "factual-accuracy",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ]
     },
     {
       "id": "OFFICIAL-STUDENT-MATERIAL-CONDITIONS",
@@ -602,11 +1086,18 @@
       ],
       "message": "학생 작성 자료의 종류와 학교교육계획·교사 지도 조건을 확인해야 합니다.",
       "recommendation": "허용된 5종 자료인지, 학교교육계획에 따른 교사 지도하의 자료인지 확인하십시오.",
-      "exceptions": ["동료평가서, 자기평가서, 수업산출물, 소감문, 독후감만 정해진 조건에서 활용합니다."],
+      "exceptions": [
+        "동료평가서, 자기평가서, 수업산출물, 소감문, 독후감만 정해진 조건에서 활용합니다."
+      ],
       "kind": "metadata",
       "check": "student-material",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-GUIDE-27-STUDENT-MATERIALS"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-27-STUDENT-MATERIALS"
+      ]
     },
     {
       "id": "OFFICIAL-STUDENT-FINAL-DRAFT",
@@ -622,11 +1113,18 @@
       ],
       "message": "학생에게 학교생활기록부 최종 서술문을 작성·제출하도록 해서는 안 됩니다.",
       "recommendation": "학생 최종 문안을 사용하지 말고 교사의 관찰·평가를 바탕으로 다시 작성하십시오.",
-      "exceptions": ["허용된 학생 작성 자료는 최종 기재문이 아니라 교사가 평가에 활용하는 자료입니다."],
+      "exceptions": [
+        "허용된 학생 작성 자료는 최종 기재문이 아니라 교사가 평가에 활용하는 자료입니다."
+      ],
       "kind": "metadata",
       "check": "student-final-narrative",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ]
     },
     {
       "id": "OFFICIAL-AI-VERBATIM",
@@ -645,8 +1143,13 @@
       "exceptions": [],
       "kind": "metadata",
       "check": "ai-use",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ]
     },
     {
       "id": "OFFICIAL-AI-VERIFICATION",
@@ -662,27 +1165,67 @@
       ],
       "message": "AI 보조 사용 시 최종 입력 전에 실제 수행과 무관한 허위·과장 내용과 기재 유의사항 준수 여부를 확인해야 합니다.",
       "recommendation": "교사가 최종 입력 전에 실제 수행, 허위·과장 여부와 기재 유의사항 준수 여부를 철저히 확인하십시오.",
-      "exceptions": ["AI를 사용하지 않은 경우에는 이 검토를 적용하지 않습니다."],
+      "exceptions": [
+        "AI를 사용하지 않은 경우에는 이 검토를 적용하지 않습니다."
+      ],
       "kind": "metadata",
       "check": "ai-use",
-      "possibleOutcomes": ["review"],
-      "evidenceIds": ["EV-GUIDE-19-NARRATIVE-AUTHORITY"]
+      "possibleOutcomes": [
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-19-NARRATIVE-AUTHORITY"
+      ]
     },
     {
       "id": "FIELD-ATTENDANCE-PROHIBITED-CONTENT",
       "title": "출결 특기사항 제외 내용",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["attendance_special"],
+      "appliesTo": [
+        "attendance_special"
+      ],
       "message": "출결 특기사항에 해외 봉사·어학연수·교외 대회 참가 내용을 입력할 수 없습니다.",
       "recommendation": "출결 사유와 관련 없는 해외 활동 또는 교외 대회 내용을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-59-ATTENDANCE"],
+      "evidenceIds": [
+        "EV-GUIDE-59-ATTENDANCE"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "출결 특기사항 제외 내용",
+        "semanticHints": [
+          "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "FIELD-ATTENDANCE-PROHIBITED-CONTENT-CONFIRM",
+            "pattern": "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))",
+            "termPatterns": [
+              {
+                "termId": "FIELD-ATTENDANCE-PROHIBITED-CONTENT-TERM",
+                "pattern": "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "FIELD-ATTENDANCE-PROHIBITED-CONTENT-SUPPORT",
+            "pattern": "(?:해외\\s*봉사|어학연수|교외[^\\n.!?。]{0,30}대회[^\\n.!?。]{0,30}(?:참가|참여|출전))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "FIELD-ATTENDANCE-PROHIBITED-CONTENT-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -691,30 +1234,76 @@
       "title": "창의적 체험활동 인정 범위",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["creative_autonomy_club_special", "creative_career_special"],
+      "appliesTo": [
+        "creative_autonomy_club_special",
+        "creative_career_special"
+      ],
       "message": "창의적 체험활동의 국내 활동 여부, 주최·주관기관과 학교장 승인 조건을 확인해야 합니다.",
       "recommendation": "활동 장소, 주최·주관기관, 학교교육계획과 학교장 승인 여부를 확인하십시오.",
-      "exceptions": ["학교가 학교교육계획에 따라 직접 주최·주관한 국내 활동은 별도 승인 조건을 적용하지 않습니다."],
+      "exceptions": [
+        "학교가 학교교육계획에 따라 직접 주최·주관한 국내 활동은 별도 승인 조건을 적용하지 않습니다."
+      ],
       "kind": "context",
       "check": "creative-activity-eligibility",
-      "possibleOutcomes": ["block", "review"],
-      "evidenceIds": ["EV-GUIDE-79-CREATIVE-SCOPE"]
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-79-CREATIVE-SCOPE"
+      ]
     },
     {
       "id": "FIELD-VOLUNTEER-SIMPLE-DONATION",
       "title": "단순 기부 봉사실적 제외",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["volunteer_activity"],
+      "appliesTo": [
+        "volunteer_activity"
+      ],
       "message": "물품이나 현금의 단순 기부는 봉사활동 실적으로 입력할 수 없습니다.",
       "recommendation": "단순 기부 실적을 삭제하고 실제 봉사활동만 입력하십시오.",
-      "exceptions": ["기부 물품을 분류·포장하는 실제 봉사활동은 단순 기부와 별도로 맥락을 확인합니다."],
+      "exceptions": [
+        "기부 물품을 분류·포장하는 실제 봉사활동은 단순 기부와 별도로 맥락을 확인합니다."
+      ],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-84-VOLUNTEER"],
+      "evidenceIds": [
+        "EV-GUIDE-84-VOLUNTEER"
+      ],
       "detector": {
         "type": "regex-any",
         "patterns": [
           "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))"
+        ]
+      },
+      "semanticReview": {
+        "concept": "단순 기부 봉사실적 제외",
+        "semanticHints": [
+          "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "FIELD-VOLUNTEER-SIMPLE-DONATION-CONFIRM",
+            "pattern": "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))",
+            "termPatterns": [
+              {
+                "termId": "FIELD-VOLUNTEER-SIMPLE-DONATION-TERM",
+                "pattern": "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "FIELD-VOLUNTEER-SIMPLE-DONATION-SUPPORT",
+            "pattern": "(?:(?:물품|현금)[^\\n.!?。]{0,20}(?:기부|기증)|(?:기부|기증)[^\\n.!?。]{0,20}(?:물품|현금))"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "FIELD-VOLUNTEER-SIMPLE-DONATION-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     },
@@ -723,13 +1312,18 @@
       "title": "봉사활동 실적 인정 조건",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["volunteer_activity"],
+      "appliesTo": [
+        "volunteer_activity"
+      ],
       "message": "봉사활동 계획 유형, 학교장 승인, 증빙과 활동 종류를 확인해야 합니다.",
       "recommendation": "학교교육계획 또는 개인계획 승인과 증빙자료를 확인하십시오.",
       "exceptions": [],
       "kind": "context",
       "check": "volunteer-eligibility",
-      "possibleOutcomes": ["block", "review"],
+      "possibleOutcomes": [
+        "block",
+        "review"
+      ],
       "evidenceIds": [
         "EV-GUIDE-83-VOLUNTEER-SCOPE",
         "EV-GUIDE-84-VOLUNTEER",
@@ -741,16 +1335,58 @@
       "title": "교과 성취수준 및 특기사항 제외 내용",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["subject_achievement_special"],
+      "appliesTo": [
+        "subject_achievement_special"
+      ],
       "message": "교과 성취수준 및 특기사항에 온라인 공개강좌나 방과후학교 활동을 입력할 수 없습니다.",
       "recommendation": "K-MOOC·MOOC·KOCW·방과후학교 관련 실적을 삭제하십시오.",
       "exceptions": [],
       "outcome": "block",
-      "evidenceIds": ["EV-GUIDE-100-SUBJECT"],
+      "evidenceIds": [
+        "EV-GUIDE-100-SUBJECT"
+      ],
       "detector": {
         "type": "literal-any",
         "caseInsensitive": true,
-        "patterns": ["K-MOOC", "MOOC", "KOCW", "방과후학교"]
+        "patterns": [
+          "K-MOOC",
+          "MOOC",
+          "KOCW",
+          "방과후학교"
+        ]
+      },
+      "semanticReview": {
+        "concept": "교과 성취수준 및 특기사항 제외 내용",
+        "semanticHints": [
+          "K-MOOC",
+          "MOOC",
+          "KOCW",
+          "방과후학교"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "FIELD-SUBJECT-PROHIBITED-CONTENT-CONFIRM",
+            "pattern": "K-MOOC",
+            "termPatterns": [
+              {
+                "termId": "FIELD-SUBJECT-PROHIBITED-CONTENT-TERM",
+                "pattern": "K-MOOC"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "FIELD-SUBJECT-PROHIBITED-CONTENT-SUPPORT",
+            "pattern": "K-MOOC"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "FIELD-SUBJECT-PROHIBITED-CONTENT-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -758,14 +1394,20 @@
       "title": "행동특성의 지속적 관찰",
       "authorityClass": "official-policy",
       "profile": "official",
-      "appliesTo": ["behavior_opinion"],
+      "appliesTo": [
+        "behavior_opinion"
+      ],
       "message": "행동특성 및 종합의견은 지속적인 관찰을 바탕으로 작성해야 합니다.",
       "recommendation": "단일 사건이 아닌 지속적인 관찰 기록을 확인하십시오.",
       "exceptions": [],
       "kind": "metadata",
       "check": "behavior-continuous-observation",
-      "possibleOutcomes": ["review"],
-      "evidenceIds": ["EV-GUIDE-102-BEHAVIOR"]
+      "possibleOutcomes": [
+        "review"
+      ],
+      "evidenceIds": [
+        "EV-GUIDE-102-BEHAVIOR"
+      ]
     },
     {
       "id": "EDITORIAL-UNSUPPORTED-SUPERLATIVE",
@@ -784,12 +1426,52 @@
       ],
       "message": "관찰 근거가 불명확한 최상급·절대 표현을 검토하십시오.",
       "recommendation": "구체적인 관찰 장면, 빈도와 변화로 바꾸어 서술하십시오.",
-      "exceptions": ["객관적 자료로 정확히 입증되고 공식 기재가 허용된 표현은 별도 검토합니다."],
+      "exceptions": [
+        "객관적 자료로 정확히 입증되고 공식 기재가 허용된 표현은 별도 검토합니다."
+      ],
       "outcome": "review",
       "localPolicyId": "LOCAL-EDITORIAL-POLICY",
       "detector": {
         "type": "literal-any",
-        "patterns": ["전교에서 가장", "항상", "완벽하게", "최고의"]
+        "patterns": [
+          "전교에서 가장",
+          "항상",
+          "완벽하게",
+          "최고의"
+        ]
+      },
+      "semanticReview": {
+        "concept": "근거 없는 최상급·절대 표현",
+        "semanticHints": [
+          "전교에서 가장",
+          "항상",
+          "완벽하게",
+          "최고의"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "EDITORIAL-UNSUPPORTED-SUPERLATIVE-CONFIRM",
+            "pattern": "전교에서 가장",
+            "termPatterns": [
+              {
+                "termId": "EDITORIAL-UNSUPPORTED-SUPERLATIVE-TERM",
+                "pattern": "전교에서 가장"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "EDITORIAL-UNSUPPORTED-SUPERLATIVE-SUPPORT",
+            "pattern": "전교에서 가장"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "EDITORIAL-UNSUPPORTED-SUPERLATIVE-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -806,12 +1488,50 @@
       ],
       "message": "교사가 직접 관찰하기 어려운 가정 내 활동 표현을 검토하십시오.",
       "recommendation": "학교에서 교사가 관찰·확인한 행동과 성취로 바꾸어 서술하십시오.",
-      "exceptions": ["공식적으로 제출된 자료를 활용할 수 있는 예외는 별도 근거를 확인합니다."],
+      "exceptions": [
+        "공식적으로 제출된 자료를 활용할 수 있는 예외는 별도 근거를 확인합니다."
+      ],
       "outcome": "review",
       "localPolicyId": "LOCAL-EDITORIAL-POLICY",
       "detector": {
         "type": "literal-any",
-        "patterns": ["집에서", "가정에서", "부모와 함께"]
+        "patterns": [
+          "집에서",
+          "가정에서",
+          "부모와 함께"
+        ]
+      },
+      "semanticReview": {
+        "concept": "가정 내 활동 서술",
+        "semanticHints": [
+          "집에서",
+          "가정에서",
+          "부모와 함께"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "EDITORIAL-HOME-ACTIVITY-CONFIRM",
+            "pattern": "집에서",
+            "termPatterns": [
+              {
+                "termId": "EDITORIAL-HOME-ACTIVITY-TERM",
+                "pattern": "집에서"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "EDITORIAL-HOME-ACTIVITY-SUPPORT",
+            "pattern": "집에서"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "EDITORIAL-HOME-ACTIVITY-NEGATIVE",
+            "pattern": "(?!)"
+          }
+        ]
       }
     },
     {
@@ -819,7 +1539,10 @@
       "title": "진로 단정 표현",
       "authorityClass": "editorial-caution",
       "profile": "official_plus_editorial",
-      "appliesTo": ["creative_career_special", "behavior_opinion"],
+      "appliesTo": [
+        "creative_career_special",
+        "behavior_opinion"
+      ],
       "message": "학생의 미래 진로를 단정하는 표현을 검토하십시오.",
       "recommendation": "현재 관찰된 관심, 탐색 활동과 역량으로 바꾸어 서술하십시오.",
       "exceptions": [],
@@ -830,6 +1553,37 @@
         "patterns": [
           "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될",
           "진로가\\s*확실"
+        ]
+      },
+      "semanticReview": {
+        "concept": "진로 단정 표현",
+        "semanticHints": [
+          "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될",
+          "진로가\\s*확실"
+        ],
+        "confirmPatterns": [
+          {
+            "patternId": "EDITORIAL-CAREER-CERTAINTY-CONFIRM",
+            "pattern": "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될",
+            "termPatterns": [
+              {
+                "termId": "EDITORIAL-CAREER-CERTAINTY-TERM",
+                "pattern": "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될"
+              }
+            ]
+          }
+        ],
+        "supportPatterns": [
+          {
+            "patternId": "EDITORIAL-CAREER-CERTAINTY-SUPPORT",
+            "pattern": "(?:반드시|틀림없이)[^\\n.!?。]{0,40}(?:가|이)\\s*될"
+          }
+        ],
+        "negativePatterns": [
+          {
+            "patternId": "EDITORIAL-CAREER-CERTAINTY-NEGATIVE",
+            "pattern": "(?!)"
+          }
         ]
       }
     }

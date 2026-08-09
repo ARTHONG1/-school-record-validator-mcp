@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import type { Finding } from "./validator-types.ts";
 import { createRewritePlan } from "./rewrite-plan.ts";
 import type {
@@ -10,6 +11,7 @@ import type {
   TeacherReviewStatus,
   ValidationResult,
 } from "./validator-types.ts";
+import type { RulePack } from "./rule-types.ts";
 
 const DEFAULT_FIELD = "subject_achievement_special" as const;
 const DEFAULT_PROFILE = "official_plus_editorial" as const;
@@ -93,7 +95,13 @@ function aggregateStatus(entries: readonly TeacherEntryReview[]): TeacherReviewS
   return "pass";
 }
 
-export function createTeacherReviewService(validator: RecordValidator) {
+export function createTeacherReviewService(validator: RecordValidator, pack?: RulePack) {
+  const semanticReviewCatalog = pack ? buildSemanticReviewCatalog(pack) : [];
+  const catalogVersion = createHash("sha256")
+    .update(JSON.stringify(semanticReviewCatalog))
+    .digest("hex")
+    .toUpperCase();
+
   return {
     review(request: TeacherReviewRequest): TeacherReviewResult {
       const defaultField = request.defaultField ?? DEFAULT_FIELD;
@@ -113,6 +121,8 @@ export function createTeacherReviewService(validator: RecordValidator) {
 
       return {
         rulePackId: validated.rulePackId,
+        catalogVersion,
+        semanticReviewCatalog,
         status,
         counts: {
           total: reviews.length,
@@ -126,4 +136,23 @@ export function createTeacherReviewService(validator: RecordValidator) {
       };
     },
   };
+}
+
+function buildSemanticReviewCatalog(pack: RulePack): Array<{
+  ruleId: string;
+  action: "prohibited" | "revise";
+  concept: string;
+  semanticHints: string[];
+}> {
+  return pack.rules
+    .filter((rule): rule is Extract<RulePack["rules"][number], { detector: unknown }> => "detector" in rule)
+    .filter((rule) => Boolean(rule.semanticReview))
+    .map((rule) => ({
+      ruleId: rule.id,
+      action: rule.authorityClass === "official-policy" && rule.outcome === "block"
+        ? "prohibited" as const
+        : "revise" as const,
+      concept: rule.semanticReview!.concept,
+      semanticHints: [...rule.semanticReview!.semanticHints],
+    }));
 }

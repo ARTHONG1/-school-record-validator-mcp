@@ -153,6 +153,25 @@ const checkSchoolRecordInput = z.object(checkSchoolRecordShape).strict().superRe
   });
 });
 
+const semanticCandidateInput = z.object({
+  candidateId: z.string().min(1).max(100),
+  ruleId: z.string().min(1).max(100),
+  spanText: z.string().min(1).max(200),
+  occurrence: z.number().int().min(1).optional(),
+  retryToken: z.string().min(1).max(300).optional(),
+}).strict();
+
+const verifySemanticCandidateInput = z.object({
+  entries: z.array(z.object({
+    entryId: z.string().min(1).max(100),
+    text: z.string().min(1).max(200_000),
+    field: inputFieldKey,
+    profile: privacySafeEnum(["official", "official_plus_editorial"]),
+    initialStatus: z.enum(["pass_no_match", "revise", "prohibited"]),
+    candidates: z.array(semanticCandidateInput).min(1).max(10),
+  }).strict()).min(1).max(100),
+}).strict();
+
 const searchGuidanceInput = z.object({
   query: z.string().min(1).max(200),
   limit: z.number().int().min(1).max(20).default(5),
@@ -317,6 +336,13 @@ const teacherEntryReviewSchema = z.object({
 
 const teacherReviewResultSchema = z.object({
   rulePackId: z.string(),
+  catalogVersion: sha256,
+  semanticReviewCatalog: z.array(z.object({
+    ruleId: z.string(),
+    action: z.enum(["prohibited", "revise"]),
+    concept: z.string(),
+    semanticHints: z.array(z.string()).min(1),
+  }).strict()),
   status: z.enum(["pass", "revise", "prohibited"]),
   counts: z.object({
     total: z.number().int().nonnegative(),
@@ -326,6 +352,31 @@ const teacherReviewResultSchema = z.object({
   }).strict(),
   entries: z.array(teacherEntryReviewSchema),
   rewritePolicy: z.string(),
+  disclaimer: z.string(),
+}).strict();
+
+const semanticVerifyResultSchema = z.object({
+  rulePackId: z.string(),
+  processingStatus: z.enum(["complete", "retry_required"]),
+  status: z.enum(["prohibited", "revise", "teacher_review", "pass_no_match"]).nullable(),
+  entries: z.array(z.object({
+    entryId: z.string(),
+    initialStatus: z.enum(["pass_no_match", "revise", "prohibited"]),
+    processingStatus: z.enum(["complete", "retry_required"]),
+    finalRecommendation: z.enum(["prohibited", "revise", "teacher_review", "pass_no_match"]).nullable(),
+    candidates: z.array(z.object({
+      candidateId: z.string(),
+      ruleId: z.string(),
+      spanText: z.string(),
+      candidateStatus: z.enum(["verified", "invalid"]),
+      verification: z.enum(["confirmed", "supported_but_uncertain", "not_supported"]).nullable(),
+      finalRecommendation: z.enum(["prohibited", "revise", "teacher_review", "pass_no_match"]).nullable(),
+      errorCode: z.string().optional(),
+      retryable: z.boolean().optional(),
+      retryToken: z.string().optional(),
+      availableOccurrences: z.array(z.number().int().positive()).optional(),
+    }).strict()),
+  }).strict()),
   disclaimer: z.string(),
 }).strict();
 
@@ -403,6 +454,7 @@ const rulePackSourceSchema = z.object({
 
 export const outputSchemas = {
   check_school_record: teacherReviewResultSchema,
+  verify_semantic_candidate: semanticVerifyResultSchema,
   validate_record_text: validationResultSchema,
   validate_record_batch: batchValidationResultSchema,
   search_record_guidance: z.object({ results: z.array(searchResultSchema) }).strict(),
@@ -433,6 +485,7 @@ export const outputSchemas = {
 
 export const inputShapes = {
   check_school_record: checkSchoolRecordShape,
+  verify_semantic_candidate: verifySemanticCandidateInput.shape,
   validate_record_text: validationInput.shape,
   validate_record_batch: validateBatchShape,
   search_record_guidance: searchGuidanceInput.shape,
@@ -444,6 +497,7 @@ export const inputShapes = {
 
 export const inputParsers = {
   check_school_record: checkSchoolRecordInput,
+  verify_semantic_candidate: verifySemanticCandidateInput,
   validate_record_text: validationInput,
   validate_record_batch: validateBatchInput,
   search_record_guidance: searchGuidanceInput,
@@ -478,6 +532,12 @@ export const TOOL_SPECS = {
     ].join(" "),
     inputSchema: inputShapes.check_school_record,
     outputSchema: outputSchemas.check_school_record.shape,
+  },
+  verify_semantic_candidate: {
+    title: "AI 의미 후보 규칙 재검증",
+    description: `외부 AI가 제출한 ruleId와 원문 verbatim spanText를 공식 규칙팩으로 재검증합니다. AI는 후보만 제출할 수 있고 최종 상태는 MCP가 결정합니다. ${LIMITATION}`,
+    inputSchema: inputShapes.verify_semantic_candidate,
+    outputSchema: outputSchemas.verify_semantic_candidate.shape,
   },
   validate_record_text: {
     title: "생활기록부 문안 검증",

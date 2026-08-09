@@ -10,6 +10,7 @@ import { createHandlerTestServices } from "./handlers.test.ts";
 
 const expertToolNames = [
   "check_school_record",
+  "verify_semantic_candidate",
   "explain_record_rule",
   "get_source_excerpt",
   "list_record_fields",
@@ -43,7 +44,7 @@ describe("MCP stdio server contract", () => {
     const { client, server } = await connectTestClient();
     try {
       const result = await client.listTools();
-      assert.deepEqual(result.tools.map((tool) => tool.name), ["check_school_record"]);
+      assert.deepEqual(result.tools.map((tool) => tool.name), ["check_school_record", "verify_semantic_candidate"]);
       assert.ok(result.tools.every((tool) => tool.inputSchema));
       assert.ok(result.tools.every((tool) => tool.outputSchema));
       assert.ok(result.tools.every((tool) => tool.description?.includes("공식 승인이나 법률 판단")));

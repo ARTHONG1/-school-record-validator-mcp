@@ -75,6 +75,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
           "search_record_guidance",
           "validate_record_batch",
           "validate_record_text",
+          "verify_semantic_candidate",
         ]);
         const result = CallToolResultSchema.parse(await client.callTool({
           name: "rule_pack_info",
@@ -94,7 +95,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const client = new Client({ name: "public-http-test", version: "0.1.0" });
       try {
         await client.connect(transport);
-        assert.equal((await client.listTools()).tools.length, 8);
+        assert.equal((await client.listTools()).tools.length, 9);
       } finally {
         await client.close();
       }
@@ -113,7 +114,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const client = new Client({ name: "remote-sse-test", version: "0.1.0" });
       try {
         await client.connect(transport);
-        assert.equal((await client.listTools()).tools.length, 8);
+        assert.equal((await client.listTools()).tools.length, 9);
       } finally {
         await client.close();
       }
@@ -128,7 +129,7 @@ describe("remote MCP HTTP server", { timeout: 30_000 }, () => {
       const client = new Client({ name: "teacher-http-test", version: "0.4.0" });
       try {
         await client.connect(transport);
-        assert.deepEqual(toolNames(await client.listTools()), ["check_school_record"]);
+        assert.deepEqual(toolNames(await client.listTools()), ["check_school_record", "verify_semantic_candidate"]);
         const result = CallToolResultSchema.parse(await client.callTool({
           name: "check_school_record",
           arguments: {

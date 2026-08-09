@@ -15,6 +15,7 @@ import { inputParsers, outputSchemas } from "./schemas.ts";
 import type { GuidanceSearch } from "./search.ts";
 import type { FieldSpec } from "./rule-types.ts";
 import { createTeacherReviewService } from "./teacher-review.ts";
+import { createSemanticVerifier } from "./semantic-verifier.ts";
 import type { BatchEntry, RecordValidator, ValidationInput } from "./validator-types.ts";
 
 export interface Services {
@@ -95,7 +96,8 @@ function fieldsFromBundle(bundle: DataBundle): FieldSpec[] {
 }
 
 export function createHandlers(services: Services) {
-  const teacherReview = createTeacherReviewService(services.validator);
+  const teacherReview = createTeacherReviewService(services.validator, services.bundle.rules);
+  const semanticVerifier = createSemanticVerifier(services.bundle);
 
   return {
     async check_school_record(args: unknown) {
@@ -104,6 +106,17 @@ export function createHandlers(services: Services) {
         const domainResult = teacherReview.review(input);
         const output = outputSchemas.check_school_record.parse(domainResult);
         return success({ ...output }, formatTeacherReviewResult(output));
+      } catch (error) {
+        return handleExpectedError(error);
+      }
+    },
+
+    async verify_semantic_candidate(args: unknown) {
+      try {
+        const input = parseInput(inputParsers.verify_semantic_candidate, args);
+        const domainResult = semanticVerifier.verify(input);
+        const output = outputSchemas.verify_semantic_candidate.parse(domainResult);
+        return success({ ...output }, JSON.stringify(output));
       } catch (error) {
         return handleExpectedError(error);
       }

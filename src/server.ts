@@ -39,7 +39,7 @@ export function createServer(
 ): McpServer {
   const server = new McpServer({
     name: "school-record-validator",
-    version: "0.4.0",
+    version: "0.5.0",
   });
   const handlers = createHandlers(services);
 
@@ -47,6 +47,11 @@ export function createServer(
     "check_school_record",
     TOOL_SPECS.check_school_record,
     (args) => invokeSafely(() => handlers.check_school_record(args)),
+  );
+  server.registerTool(
+    "verify_semantic_candidate",
+    TOOL_SPECS.verify_semantic_candidate,
+    (args) => invokeSafely(() => handlers.verify_semantic_candidate(args)),
   );
 
   if ((options.toolset ?? "teacher") !== "expert") return server;

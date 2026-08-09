@@ -288,6 +288,31 @@ const detectorSchema = z.object({
   caseInsensitive: z.boolean().optional(),
 }).strict();
 
+const semanticTermPatternSchema = z.object({
+  termId: identifierSchema,
+  pattern: nonBlankStringSchema,
+}).strict();
+
+const semanticVerifierPatternSchema = z.object({
+  patternId: identifierSchema,
+  pattern: nonBlankStringSchema,
+  termPatterns: z.array(semanticTermPatternSchema).min(1),
+}).strict();
+
+const semanticReviewSchema = z.object({
+  concept: nonBlankStringSchema,
+  semanticHints: z.array(nonBlankStringSchema).min(1),
+  confirmPatterns: z.array(semanticVerifierPatternSchema).min(1),
+  supportPatterns: z.array(z.object({
+    patternId: identifierSchema,
+    pattern: nonBlankStringSchema,
+  }).strict()).min(1),
+  negativePatterns: z.array(z.object({
+    patternId: identifierSchema,
+    pattern: nonBlankStringSchema,
+  }).strict()).min(1),
+}).strict();
+
 const baseRuleShape = {
   id: identifierSchema,
   title: nonBlankStringSchema,
@@ -305,6 +330,7 @@ const officialPhraseRuleSchema = z.object({
   outcome: z.enum(["block", "review"]),
   evidenceIds: evidenceIdsSchema,
   detector: detectorSchema,
+  semanticReview: semanticReviewSchema.optional(),
 }).strict();
 
 const editorialPhraseRuleSchema = z.object({
@@ -314,6 +340,7 @@ const editorialPhraseRuleSchema = z.object({
   outcome: z.literal("review"),
   localPolicyId: z.literal("LOCAL-EDITORIAL-POLICY"),
   detector: detectorSchema,
+  semanticReview: semanticReviewSchema.optional(),
 }).strict();
 
 const officialLengthRuleSchema = z.object({
@@ -408,6 +435,24 @@ function verifyRawAuthoritySeparation(value: unknown): void {
       ) {
         validationFailure("rule-authority-separation", RULE_PACK_PATH);
       }
+    }
+  }
+}
+
+function verifySemanticMetadata(rules: RulePack): void {
+  for (const rule of rules.rules) {
+    if (!("detector" in rule)) continue;
+    if (!rule.semanticReview) {
+      validationFailure("semantic-rule-metadata", RULE_PACK_PATH);
+    }
+    const definition = rule.semanticReview;
+    if (
+      definition.confirmPatterns.some((item) => item.termPatterns.length === 0)
+      || definition.semanticHints.length === 0
+      || definition.supportPatterns.length === 0
+      || definition.negativePatterns.length === 0
+    ) {
+      validationFailure("semantic-rule-metadata", RULE_PACK_PATH);
     }
   }
 }

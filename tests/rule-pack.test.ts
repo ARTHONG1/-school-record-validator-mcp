@@ -365,6 +365,21 @@ describe("elementary 2026 rule pack", () => {
     }
   });
 
+  it("provides semantic verification metadata for every phrase rule", async () => {
+    const pack = await readRulePack();
+    const phraseRules = pack.rules.filter(isPhraseRule);
+
+    assert.ok(phraseRules.length > 0);
+    for (const rule of phraseRules) {
+      assert.ok(rule.semanticReview, `${rule.id}: semanticReview`);
+      assert.ok(rule.semanticReview.concept.trim().length > 0, `${rule.id}: concept`);
+      assert.ok(rule.semanticReview.semanticHints.length > 0, `${rule.id}: semanticHints`);
+      assert.ok(rule.semanticReview.confirmPatterns.length > 0, `${rule.id}: confirmPatterns`);
+      assert.ok(rule.semanticReview.supportPatterns.length > 0, `${rule.id}: supportPatterns`);
+      assert.ok(rule.semanticReview.negativePatterns.length > 0, `${rule.id}: negativePatterns`);
+    }
+  });
+
   it("matches every detector fixture and rejects its nearby non-example", async () => {
     const pack = await readRulePack();
     const phraseRules = pack.rules.filter(isPhraseRule);
