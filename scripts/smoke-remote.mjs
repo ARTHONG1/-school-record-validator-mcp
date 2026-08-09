@@ -12,14 +12,14 @@ if ((!isLocal && url.protocol !== "https:") || url.pathname !== "/mcp") {
   throw new Error("REMOTE_MCP_URL must be an HTTPS /mcp endpoint, except localhost");
 }
 
-const client = new Client({ name: "school-record-validator-release-smoke", version: "0.4.0" });
+const client = new Client({ name: "school-record-validator-release-smoke", version: "0.5.0" });
 const transport = new StreamableHTTPClientTransport(url);
 const secret = "SMOKE-PRIVATE-STUDENT-SENTENCE-MUST-NOT-RETURN";
 
 try {
   await client.connect(transport);
   const listed = await client.listTools();
-  assert.deepEqual(listed.tools.map((tool) => tool.name), ["check_school_record"]);
+  assert.deepEqual(listed.tools.map((tool) => tool.name), ["check_school_record", "verify_semantic_candidate"]);
 
   const result = CallToolResultSchema.parse(await client.callTool({
     name: "check_school_record",
