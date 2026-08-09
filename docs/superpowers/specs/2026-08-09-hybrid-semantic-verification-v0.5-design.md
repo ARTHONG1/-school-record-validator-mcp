@@ -419,7 +419,7 @@ Every semantic-reviewable rule must have:
 - at least 10 known negatives;
 - at least 3 confirm/negative conflict cases.
 
-The initial corpus is at least 300 synthetic or de-identified entries. It contains no real identifying student information.
+The current pack has 18 semantic phrase rules, so the initial corpus contains at least 594 synthetic or de-identified entries. It contains no real identifying student information.
 
 Regression fixtures are separate from the production rule pack but reference stable rule and pattern IDs. A build-time coverage test fails if any semantic rule lacks the required fixture counts.
 
