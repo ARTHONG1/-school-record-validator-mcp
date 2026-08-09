@@ -4,7 +4,7 @@
 
 **Goal:** Build and release a two-tool teacher MCP in which an external AI detects possible semantic omissions across the complete active rule pack, while deterministic MCP code validates exact-span candidates and owns every final status transition.
 
-**Architecture:** `check_school_record` performs the complete first-pass deterministic review and returns a compact catalog of every semantic rule applicable to each `pass_no_match` entry. The external AI submits only catalog `ruleId` values and verbatim UTF-16 spans to `verify_semantic_candidate`; a candidate-gated matcher returns `confirmed`, `supported_but_uncertain`, or `not_supported`, and code resolves the final disposition. Every AI rewrite re-enters `check_school_record` and repeats the full hybrid flow.
+**Architecture:** `check_school_record` performs the complete first-pass deterministic review and returns a compact, versioned catalog of every semantic rule applicable to each `pass_no_match` entry. The external AI submits only catalog `ruleId` values and verbatim `spanText`; the MCP resolves occurrences and offsets, applies candidate matchers with a server-owned context window, and code resolves the final disposition. Every AI rewrite re-enters `check_school_record` and repeats the full hybrid flow.
 
 **Tech Stack:** Node.js 22.18+, TypeScript 5.9, MCP SDK 1.30, Zod 3.25, deterministic JSON rule pack, Node test runner, GitHub Actions/Pages, Google Cloud Build and Cloud Run.
 
@@ -12,10 +12,10 @@
 
 - Public teacher mode exposes exactly `check_school_record` and `verify_semantic_candidate`.
 - MCP contains no LLM, embedding model, vector database, or network-based semantic classifier.
-- AI may submit `ruleId` and exact source span but may never submit or override a final status.
+- AI may submit `ruleId`, verbatim `spanText`, and occurrence only when needed, but may never submit or override a final status.
 - `confirmed` requires a deterministic candidate matcher on the submitted exact span.
 - `supported_but_uncertain` always maps to `teacher_review`.
-- Invalid AI candidates make review incomplete and map to `teacher_review`, never a false pass.
+- A first format-invalid AI candidate returns `retry_required`; one invalid retry maps to `teacher_review`, never a false pass.
 - `pass_no_match` means only that the declared deterministic rules did not match; it is not official approval.
 - Semantic scope is generated from every applicable semantic rule, not a hardcoded category subset.
 - Natural-language rewrites use only original or teacher-confirmed facts and always re-enter the full hybrid pipeline.
@@ -185,6 +185,7 @@ Test these exact properties:
 - output includes only `ruleId`, `action`, `concept`, `semanticHints`;
 - rule order follows sealed rule-pack order;
 - catalog items are deduplicated across a mixed-field batch.
+- `catalogVersion` changes when rule IDs, actions, concepts, or hints change and remains stable otherwise.
 
 - [ ] **Step 2: Define catalog contracts**
 
@@ -221,6 +222,8 @@ buildSemanticCatalog(
 ): SemanticCatalogItem[];
 ```
 
+Also export `semanticCatalogVersion(items): string`, using a stable serialization and SHA-256 digest.
+
 - [ ] **Step 4: Run tests and commit**
 
 ```powershell
@@ -237,7 +240,7 @@ git commit -m "feat: derive compact semantic review catalog"
 - Create: `tests/semantic-verifier.test.ts`
 
 **Interfaces:**
-- Consumes: original text, candidate ID, rule ID, exact UTF-16 span, applicable semantic phrase rule.
+- Consumes: original text, candidate ID, rule ID, verbatim span text, optional one-based occurrence, optional retry token, and applicable semantic phrase rule.
 - Produces: processed or invalid candidate result without assigning AI-authored status.
 
 - [ ] **Step 1: Write the matcher truth-table tests**
@@ -254,9 +257,11 @@ Use one fixture rule and assert:
 
 Also assert `matchedTerms` are actual source substrings extracted by the confirm pattern's `termPatterns`.
 
-- [ ] **Step 2: Write span and rule error tests**
+- [ ] **Step 2: Write span resolution, context, and rule error tests**
 
-Cover `unknown_rule_id`, `rule_not_semantic`, `rule_not_applicable`, `span_out_of_bounds`, `span_mismatch`, `empty_span`, duplicate candidate IDs, and 11 candidates on one entry. Include Korean plus emoji text to prove UTF-16 offsets use JavaScript slice semantics.
+Cover candidate-local `unknown_rule_id`, `rule_not_semantic`, `rule_not_applicable`, `span_not_found`, `ambiguous_span`, `occurrence_out_of_range`, and `empty_span`. Assert a unique `spanText` resolves without occurrence, repeated text requires one-based occurrence, and output UTF-16 offsets correctly slice Korean plus emoji text. Duplicate candidate IDs and candidate-count limits remain request-level schema errors in Task 6.
+
+Add context tests where `spanText: "의사"` is confirmed only because the server-derived ±40-code-point sentence-bounded context contains `아버지가 의사`, while `의사의 역할을 조사함` is not confirmed. Assert every confirm match overlaps the resolved span and cannot be triggered by an unrelated expression elsewhere in the context window.
 
 - [ ] **Step 3: Implement the verifier**
 
@@ -272,7 +277,9 @@ verifySemanticCandidate(input: {
 }): CandidateResult;
 ```
 
-Never normalize returned span text. Regexes may use Unicode/case-insensitive flags internally, but returned offsets and text always come from the original string.
+Resolve span occurrences before matching. Never normalize returned span text. Regexes may use Unicode/case-insensitive flags internally, but returned offsets and text always come from the original string. Derive a context window of up to 40 Unicode code points on either side, clipped at sentence/newline boundaries, and require confirm matches to overlap the resolved span.
+
+Implement retry tokens as SHA-256 over stable serialized pack ID, entry ID, original-text hash, candidate ID, and rule ID. Tokens never bypass candidate validation and can only turn a second invalid attempt into `teacher_review`.
 
 - [ ] **Step 4: Run tests and commit**
 
@@ -302,6 +309,7 @@ Assert a clean entry returns:
 ```ts
 {
   status: "pass_no_match",
+  validationSummary: "세부능력 및 특기사항에 적용되는 공식·편집 규칙 ...",
   validation: { profileUsed: "official_plus_editorial", checkedRuleCount: 18, matchedRuleCount: 0 },
   fieldResolution: { requested: null, resolved: "subject_achievement_special", method: "default" },
   semanticReviewRuleIds: expect.arrayContaining(["OFFICIAL-CONTEST-PARTICIPATION-AWARD"]),
@@ -311,6 +319,7 @@ Assert a clean entry returns:
 Compute the expected rule count from the fixture, not a hardcoded production count.
 
 Assert `장학생` and `장학금` become one issue with two matches and one citation ID. Assert the top-level citation registry stores that citation once.
+Assert every citation includes `sourceUrl` when the source manifest provides one and safely omits it otherwise.
 
 - [ ] **Step 2: Add exact schema v2 result types**
 
@@ -323,6 +332,8 @@ Group findings by `ruleId + issue status + reason + improvement`. Preserve first
 - [ ] **Step 4: Implement pass scope and field resolution**
 
 Track whether each entry supplied `field`. Count every deterministic rule actually evaluated for that entry, including applicable phrase and length rules; document separately that provenance/context checks depend on supplied metadata. Add semantic rule IDs only to `pass_no_match` entries.
+
+Generate `validationSummary` in MCP code from the resolved Korean field label, profile, checked rule count, and matched rule count. It must say "결정적 일치 항목이 발견되지 않았습니다" for pass-no-match and must never say the sentence is officially permitted.
 
 - [ ] **Step 5: Run tests and commit**
 
@@ -356,14 +367,15 @@ pass + confirmed official block -> prohibited
 pass + confirmed editorial review -> revise
 pass + uncertain -> teacher_review
 pass + not_supported -> pass_no_match
-pass + invalid candidate -> teacher_review
+pass + first invalid candidate -> retry_required with null final status
+pass + invalid candidate carrying valid retry token -> teacher_review
 ```
 
 For multiple candidates assert severity `prohibited > teacher_review > revise > pass_no_match`. For mixed entries assert stable input order.
 
 - [ ] **Step 2: Implement entry-level partial failure**
 
-Malformed top-level schema remains atomic. Candidate-local errors return `candidateStatus: "invalid"`; an entry with any invalid candidate and no stronger result becomes `teacher_review`.
+Malformed top-level schema remains atomic. A first candidate-local error returns `candidateStatus: "invalid"`, `retryable: true`, `retryToken`, `processingStatus: "retry_required"`, and no final status. A second invalid attempt carrying the matching token returns `retryable: false`; an entry with no stronger result becomes `teacher_review`. Mixed batches with any outstanding retry have top-level `status: null` and cannot be displayed as final.
 
 - [ ] **Step 3: Rerun first-pass review internally**
 
@@ -396,15 +408,15 @@ git commit -m "feat: resolve hybrid review states in code"
 
 - [ ] **Step 1: Write failing handler contract tests**
 
-Assert both tools return structured content accepted by strict output schemas. Assert unknown top-level keys, nested unknown keys, duplicate IDs, 101 entries, 11 candidates per entry, 501 total candidates, bad spans, and unsupported enum values never echo submitted text in errors.
+Assert both tools return structured content accepted by strict output schemas. Assert unknown top-level keys, nested unknown keys, duplicate IDs, 101 entries, 11 candidates per entry, 501 total candidates, missing/ambiguous span text, invalid occurrence, bad retry token, and unsupported enum values never echo submitted text in errors.
 
 - [ ] **Step 2: Define strict verifier input shapes**
 
-Use `entries` with 1-100 items, 1-10 candidates per entry, unique IDs, and a cross-entry total-candidate super-refinement capped at 500. `ruleId` and candidate IDs are 1-100 characters. Span start/end are nonnegative integers; semantic validity is candidate-local in the service.
+Use `entries` with 1-100 items, 1-10 candidates per entry, unique IDs, and a cross-entry total-candidate super-refinement capped at 500. `ruleId` and candidate IDs are 1-100 characters. `spanText` is nonblank, `occurrence` is an optional positive integer, and `retryToken` is an optional uppercase SHA-256 string. Occurrence resolution and token binding are candidate-local service checks.
 
 - [ ] **Step 3: Define strict output schemas**
 
-Add discriminated unions on `candidateStatus` for `processed`, `invalid`, and `skipped`. Require `verification: null` for invalid/skipped and one of the three verification values for processed candidates.
+Add discriminated unions on `candidateStatus` for `processed`, `invalid`, and `skipped`. Require `verification: null` for invalid/skipped and one of the three verification values for processed candidates. Require `processingStatus: "retry_required"` and `status: null` whenever any first-attempt candidate requires retry.
 
 - [ ] **Step 4: Add handler and formatter**
 
@@ -546,7 +558,9 @@ interface SemanticRegressionCase {
   text: string;
   field: FieldKey;
   profile: ValidationProfile;
-  span: { text: string; start: number; end: number };
+  spanText: string;
+  occurrence?: number;
+  expectedResolvedSpan: { text: string; start: number; end: number };
   expectedVerification: "confirmed" | "supported_but_uncertain" | "not_supported";
   expectedFinal: HybridDisposition;
 }
@@ -558,7 +572,7 @@ For each of 18 rules include at least 5 canonical, 10 paraphrase/spacing/synonym
 
 - [ ] **Step 3: Add coverage and metric tests**
 
-Fail if any rule lacks a required kind/count, any case references an unknown pattern/rule, any span is invalid, any known positive misses, any known negative confirms, or any expected final state differs. Print counts only, never fixture text, on failure summaries.
+Fail if any rule lacks a required kind/count, any case references an unknown pattern/rule, any span occurrence cannot resolve to `expectedResolvedSpan`, any known positive misses, any known negative confirms, or any expected final state differs. Print counts only, never fixture text, on failure summaries.
 
 - [ ] **Step 4: Register the dedicated command and commit**
 
@@ -595,7 +609,7 @@ Expected: 100% fixed-suite positive recall and known-negative precision.
 
 - [ ] **Step 1: Add privacy and integrity tests**
 
-Assert text and spans never reach stdout/stderr, malformed candidate errors do not echo input, tampered semantic patterns fail bundle load, unsafe semantic regexes fail startup, and candidate AI rationale is not accepted by strict schemas.
+Assert text, span text, and server-derived context never reach stdout/stderr, malformed candidate errors do not echo input, retry tokens contain no reversible text, tampered semantic patterns fail bundle load, unsafe semantic regexes fail startup, and candidate AI rationale is not accepted by strict schemas.
 
 - [ ] **Step 2: Add performance budgets**
 
@@ -610,12 +624,14 @@ first-pass prohibited -> no verifier needed
 first-pass pass -> AI candidate -> confirmed prohibited
 first-pass pass -> uncertain -> teacher_review
 first-pass pass -> not_supported -> pass_no_match
+first invalid span selector -> retry_required -> corrected retry -> processed
+first invalid span selector -> retry_required -> second invalid -> teacher_review
 grounded rewrite -> check again -> semantic review again
 ```
 
 - [ ] **Step 4: Upgrade production smoke test**
 
-`scripts/smoke-remote.mjs` must assert exactly two teacher tools, schema version 2.0, pack 2026.2, compact catalog, a confirmed candidate, an uncertain candidate, a not-supported candidate, grouped issues, citation deduplication, and rewrite re-entry.
+`scripts/smoke-remote.mjs` must assert exactly two teacher tools, schema version 2.0, pack 2026.2, stable `catalogVersion`, compact catalog, server-generated `validationSummary`, citation `sourceUrl`, a confirmed context-aware candidate, an uncertain candidate, a not-supported candidate, one successful retry, grouped issues, citation deduplication, and rewrite re-entry.
 
 - [ ] **Step 5: Add CI semantic gate and commit**
 
@@ -655,11 +671,12 @@ The prompt must require:
 1. Always call check_school_record first.
 2. Treat revise/prohibited as final.
 3. For pass_no_match, compare each entry against every semanticReviewRuleId in the compact catalog.
-4. Submit only catalog ruleId values and verbatim exact spans.
+4. Submit only catalog ruleId values and verbatim meaningful `spanText`; provide one-based occurrence only when the MCP reports ambiguity.
 5. Never invent or modify status/finalRecommendation.
-6. Display invalid or uncertain candidates as teacher_review.
-7. Generate rewrites only from known facts.
-8. Re-run rewritten text through the complete two-tool flow.
+6. Retry a format-invalid candidate exactly once using the returned retry token.
+7. Display an invalid retry or uncertain candidate as teacher_review.
+8. Generate rewrites only from known facts.
+9. Re-run rewritten text through the complete two-tool flow.
 ```
 
 Include exact conversion from `{record:{record_1:"..."}}` to entries and exact final JSON expected by the user's AI node.
@@ -674,7 +691,7 @@ Show the two-tool sequence, AI/MCP authority boundary, four states, privacy warn
 
 - [ ] **Step 4: Strengthen site verification and commit**
 
-Require `verify_semantic_candidate`, `pass_no_match`, `teacher_review`, `schemaVersion`, `2026.2`, and rewrite full re-entry in `verify-site.mjs`.
+Require `verify_semantic_candidate`, `pass_no_match`, `teacher_review`, `schemaVersion`, `catalogVersion`, `validationSummary`, `2026.2`, one-retry behavior, and rewrite full re-entry in `verify-site.mjs`.
 
 ```powershell
 npm.cmd run verify:site
@@ -783,8 +800,10 @@ Write final commit SHA, tag SHA, main CI URL, tag CI URL, Pages URL, Cloud Run r
 - [ ] Every semantic rule has at least 33 regression fixtures; total is at least 594.
 - [ ] Known positive recall and known-negative precision are 100% on the fixed suite.
 - [ ] AI candidate rule selection alone can never produce `confirmed`.
-- [ ] Exact-span validation works for Korean, Latin text, and surrogate pairs.
-- [ ] Invalid candidates yield `teacher_review`, not pass or request-wide 500.
+- [ ] Verbatim span occurrence resolution and returned UTF-16 offsets work for Korean, Latin text, repeated spans, and surrogate pairs.
+- [ ] First invalid candidates yield one retry; a second invalid attempt yields `teacher_review`, never pass or request-wide 500.
+- [ ] Candidate matching uses server-derived sentence-bounded context and requires confirm-match overlap with the exact span.
+- [ ] Results include stable `catalogVersion`, MCP-generated `validationSummary`, and citation `sourceUrl` where available.
 - [ ] Grouped issues and citation registry remove repeated 687-character citations.
 - [ ] `pass_no_match` reports actual checked scope and does not claim approval.
 - [ ] Rewrites re-enter the complete hybrid flow.
